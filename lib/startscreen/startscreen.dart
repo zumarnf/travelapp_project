@@ -28,15 +28,15 @@ class _StartscreenState extends State<Startscreen> {
                 fit: BoxFit
                     .cover, // Ini akan membuat gambar menutupi ruang yang tersedia
               ),
-              SizedBox(height: 15),
-              Text(
+              const SizedBox(height: 15),
+              const Text(
                 'Teks Anda di sini',
                 style: TextStyle(
                   fontWeight: FontWeight.bold, // Membuat teks menjadi tebal
                   fontSize: 18, // Ukuran teks yang diinginkan
                 ),
               ),
-              Text(
+              const Text(
                 'Teks Anda di sini',
                 style: TextStyle(
                   fontWeight: FontWeight.w200, // Membuat teks menjadi tebal
@@ -46,7 +46,7 @@ class _StartscreenState extends State<Startscreen> {
             ],
           ),
 
-          SizedBox(height: 30),
+          const SizedBox(height: 30),
 
           // Tombol Login
           ElevatedButton(
@@ -54,15 +54,15 @@ class _StartscreenState extends State<Startscreen> {
               // Aksi untuk tombol login
               print('Tombol Login ditekan');
             },
-            child: Text('Login'),
             style: ElevatedButton.styleFrom(
-              padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
-              backgroundColor: Color(0xFFFF9F5A), // Warna latar belakang FF9F5A
+              padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+              backgroundColor: const Color(0xFFFF9F5A), // Warna latar belakang FF9F5A
               foregroundColor: Colors.white, // Warna teks putih (FFFFFF)
-              minimumSize: Size(150, 50), // Ukuran minimum untuk tombol
+              minimumSize: const Size(150, 50), // Ukuran minimum untuk tombol
             ),
+            child: const Text('Login'),
           ),
-          SizedBox(height: 20), // Jarak antara tombol Login dan Sign Up
+          const SizedBox(height: 20), // Jarak antara tombol Login dan Sign Up
 
           // Tombol Sign Up
           ElevatedButton(
@@ -70,13 +70,13 @@ class _StartscreenState extends State<Startscreen> {
               // Aksi untuk tombol sign up
               print('Tombol Sign Up ditekan');
             },
-            child: Text('Sign Up'),
             style: ElevatedButton.styleFrom(
-              padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
-              backgroundColor: Color(0xFFFF9F5A), // Warna latar belakang FF9F5A
+              padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+              backgroundColor: const Color(0xFFFF9F5A), // Warna latar belakang FF9F5A
               foregroundColor: Colors.white, // Warna teks putih (FFFFFF)
-              minimumSize: Size(150, 50), // Ukuran minimum untuk tombol
+              minimumSize: const Size(150, 50), // Ukuran minimum untuk tombol
             ),
+            child: const Text('Sign Up'),
           ),
         ],
       ),

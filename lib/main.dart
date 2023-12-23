@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:travelapp/homeguest/homeguestpage.dart';
 import 'package:travelapp/startscreen/startscreen.dart';
 
 void main() {
@@ -17,8 +18,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const Startscreen(),
+      home: const HomePage(),
     );
   }
 }
-
