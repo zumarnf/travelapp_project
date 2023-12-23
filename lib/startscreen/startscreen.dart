@@ -62,8 +62,50 @@ class _StartscreenState extends State<Startscreen> {
               // Tombol Login
               ElevatedButton(
                 onPressed: () {
-                  // Aksi untuk tombol login
-                  print('Tombol Login ditekan');
+                  // Tampilkan dialog saat tombol ditekan
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text('Pilih Opsi'),
+                            SizedBox(
+                                height: 20), // Spasi antara teks dan tombol
+                            // Kolom untuk menempatkan TextButton di tengah
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                // Tombol pertama
+                                TextButton(
+                                  child: Text('Opsi 1'),
+                                  onPressed: () {
+                                    // Lakukan aksi ketika opsi 1 ditekan
+                                    print('Opsi 1 ditekan');
+                                    Navigator.of(context).pop(); // Tutup dialog
+                                  },
+                                ),
+                                // Spasi antara tombol
+                                SizedBox(height: 10),
+                                // Tombol kedua
+                                TextButton(
+                                  child: Text('Opsi 2'),
+                                  onPressed: () {
+                                    // Lakukan aksi ketika opsi 2 ditekan
+                                    print('Opsi 2 ditekan');
+                                    Navigator.of(context).pop(); // Tutup dialog
+                                  },
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  );
                 },
                 child: Text('Login', style: GoogleFonts.poppins(fontSize: 18)),
                 style: ElevatedButton.styleFrom(
@@ -72,12 +114,11 @@ class _StartscreenState extends State<Startscreen> {
                   foregroundColor: Colors.white,
                   minimumSize: Size(320, 40),
                   shape: RoundedRectangleBorder(
-                    // Mengatur bentuk menjadi bulat
-                    borderRadius: BorderRadius.circular(
-                        27), // Anda dapat menyesuaikan nilai untuk membuatnya lebih bulat atau kurang bulat
+                    borderRadius: BorderRadius.circular(27),
                   ),
                 ),
               ),
+
               SizedBox(height: 20),
 
 // Tombol Sign Up
