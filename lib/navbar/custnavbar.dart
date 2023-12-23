@@ -2,9 +2,6 @@ import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.da
 import 'package:flutter/material.dart';
 
 // main app that calls the runApp.
-void main() {
-runApp(AnimatedBottomBar());
-}
 
 class AnimatedBottomBar extends StatefulWidget {
 AnimatedBottomBar({Key? key}) : super(key: key);
