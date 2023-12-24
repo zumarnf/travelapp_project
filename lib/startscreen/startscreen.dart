@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:travelapp/loginguest/loginguestpage.dart';
 
 class Startscreen extends StatefulWidget {
   const Startscreen({super.key});
@@ -71,7 +72,7 @@ class _StartscreenState extends State<Startscreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Text('Pilih Opsi'),
+                            Text('Login As'),
                             SizedBox(
                                 height: 20), // Spasi antara teks dan tombol
                             // Kolom untuk menempatkan TextButton di tengah
@@ -81,11 +82,15 @@ class _StartscreenState extends State<Startscreen> {
                               children: [
                                 // Tombol pertama
                                 TextButton(
-                                  child: Text('Opsi 1'),
+                                  child: Text('Guest'),
                                   onPressed: () {
                                     // Lakukan aksi ketika opsi 1 ditekan
-                                    print('Opsi 1 ditekan');
-                                    Navigator.of(context).pop(); // Tutup dialog
+
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => loginguest()),
+                                    );
                                   },
                                 ),
                                 // Spasi antara tombol
@@ -133,8 +138,8 @@ class _StartscreenState extends State<Startscreen> {
                 ),
                 style: ElevatedButton.styleFrom(
                   padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
-                  backgroundColor: Color(0xFFFF9F5A),
-                  foregroundColor: Colors.white,
+                  backgroundColor: Color.fromRGBO(240, 240, 240, 1),
+                  foregroundColor: const Color.fromRGBO(255, 159, 90, 1),
                   minimumSize: Size(320, 50),
                   shape: RoundedRectangleBorder(
                     // Mengatur bentuk menjadi bulat
