@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:travelapp/loginguest/loginguestpage.dart';
+import 'package:travelapp/loginadmin/loginadminpage.dart';
+import 'package:travelapp/signupscreen/signuppage.dart';
 
 class Startscreen extends StatefulWidget {
   const Startscreen({super.key});
@@ -100,8 +102,11 @@ class _StartscreenState extends State<Startscreen> {
                                   child: Text('Opsi 2'),
                                   onPressed: () {
                                     // Lakukan aksi ketika opsi 2 ditekan
-                                    print('Opsi 2 ditekan');
-                                    Navigator.of(context).pop(); // Tutup dialog
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => loginadmin()),
+                                    ); // Tutup dialog
                                   },
                                 ),
                               ],
@@ -131,6 +136,12 @@ class _StartscreenState extends State<Startscreen> {
                 onPressed: () {
                   // Aksi untuk tombol sign up
                   print('Tombol Sign Up ditekan');
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            SignupPage()), // Gantilah 'HomePage' dengan halaman yang Anda inginkan
+                  );
                 },
                 child: Text(
                   'Sign Up',
