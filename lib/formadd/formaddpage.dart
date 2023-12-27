@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -8,7 +9,7 @@ class DestinationForm extends StatefulWidget {
 
 class _DestinationFormState extends State<DestinationForm> {
   final _formKey = GlobalKey<FormState>();
-  String _pictureUrl = '';
+  String _pictureUrl = ''; // This will store the path string
   String _destinationName = '';
   String _location = '';
   String _description = '';
@@ -32,14 +33,21 @@ class _DestinationFormState extends State<DestinationForm> {
                       .pickImage(source: ImageSource.gallery);
 
                   if (pickedFile != null) {
+                    final bytes = await pickedFile.readAsBytes();
                     setState(() {
-                      _pictureUrl = pickedFile
-                          .path; // Atau Anda bisa menyimpan di cloud storage dan mendapatkan URL
+                      _pictureUrl = base64Encode(bytes);
                     });
                   }
                 },
                 child: Text('Upload Image'),
               ),
+              _pictureUrl.isNotEmpty
+                  ? Image.memory(
+                      base64Decode(_pictureUrl), // Decode base64 to bytes
+                      height: 200,
+                      width: 200,
+                    )
+                  : Text('No image selected.'),
               SizedBox(height: 16),
               TextFormField(
                 decoration: InputDecoration(labelText: 'Destination Name'),
@@ -98,7 +106,7 @@ class _DestinationFormState extends State<DestinationForm> {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
 
-      // Perform actions with the form data (e.g., send to a server)
+      // Perform actions with the form data
       print('Picture URL: $_pictureUrl');
       print('Destination Name: $_destinationName');
       print('Location: $_location');
