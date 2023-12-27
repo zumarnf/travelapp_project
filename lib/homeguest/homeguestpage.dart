@@ -15,10 +15,10 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-              child: Icon(Icons.location_on_outlined), onPressed: () {}),
-          floatingActionButtonLocation:
-              FloatingActionButtonLocation.centerDocked,
-          bottomNavigationBar: buildAnimatedBottomBar(),
+          child: Icon(Icons.location_on_outlined), onPressed: () {}),
+      floatingActionButtonLocation: 
+      FloatingActionButtonLocation.centerDocked,
+      bottomNavigationBar: buildAnimatedBottomBar(),
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
