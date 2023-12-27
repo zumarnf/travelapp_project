@@ -1,15 +1,32 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
-// import 'package:travel_app/widgets/distance.dart';
-import 'package:travelapp/homeguest/widgets/distance.dart';
 
-class TouristDetailsPage extends StatelessWidget {
+class TouristDetailsPage extends StatefulWidget {
   const TouristDetailsPage({
     Key? key,
     required this.image,
   }) : super(key: key);
+
   final String image;
+
+  @override
+  _TouristDetailsPageState createState() => _TouristDetailsPageState();
+}
+
+class _TouristDetailsPageState extends State<TouristDetailsPage> {
+  List<String> imageList = [
+    'assets/img/place1.jpg',
+    'assets/img/place2.jpg',
+    'assets/img/place3.jpg',
+    'assets/img/place4.jpg',
+    'assets/img/place5.jpg',
+    'assets/img/place6.jpg',
+    'assets/img/place7.jpg',
+    // Add more image paths as needed
+  ];
+
+  int _currentIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -19,8 +36,8 @@ class TouristDetailsPage extends StatelessWidget {
           padding: const EdgeInsets.all(10),
           children: [
             SizedBox(
-              height: size.height * 0.38,
-              width: double.maxFinite,
+              height: size.height * .6,
+              width: 100,
               child: Stack(
                 fit: StackFit.expand,
                 children: [
@@ -29,15 +46,15 @@ class TouristDetailsPage extends StatelessWidget {
                       borderRadius: const BorderRadius.vertical(
                           bottom: Radius.circular(20)),
                       image: DecorationImage(
-                        image: AssetImage(image),
+                        image: AssetImage(widget.image),
                         fit: BoxFit.cover,
                       ),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withOpacity(0.4),
-                          spreadRadius: 0,
-                          blurRadius: 20,
-                          offset: const Offset(0, 10),
+                          color: Colors.transparent,
+                          // spreadRadius: 0,
+                          // blurRadius: 20,
+                          // offset: const Offset(0, 10),
                         ),
                       ],
                     ),
@@ -72,89 +89,70 @@ class TouristDetailsPage extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(height: 20),
-            Row(
-              children: [
-                Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
+            const SizedBox(height: 25),
+            // Place name
+            Padding(
+              padding: const EdgeInsets.only(left: 20.0),
+              child: Text(
                 "Sea of Peace",
                 style: Theme.of(context).textTheme.titleLarge,
               ),
-            const SizedBox(height: 5),
-            Text(
-                      "Portic Team 8km",
-                      style: Theme.of(context).textTheme.bodySmall,
-                    )
-                  ],
-                ),
-                const Spacer(),
-                Padding(
-                  padding: const EdgeInsets.only(right: 4),
-                  child: IconButton(
-                    onPressed: () {},
-                    iconSize: 20,
-                    icon: const Icon(Ionicons.chatbubble_ellipses_outline),
-                  ),
-                ),
-                Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      "4.6",
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
-                    Icon(
-                      Ionicons.star,
-                      color: Colors.yellow[800],
-                      size: 15,
-                    )
-                  ],
-                )
+            ),
+            const SizedBox(height: 25),
+            // Location, Rating, and Distance
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                _buildDetailColumn("Location", Icons.location_on),
+                _buildDetailColumn("Rating", Icons.star),
+                _buildDetailColumn("Distance", Icons.directions),
               ],
             ),
             const SizedBox(height: 15),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      "01d:32h:56m",
-                      style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                            color: Theme.of(context).colorScheme.primary,
-                          ),
-                    ),
-            const SizedBox(height: 5),
-                    Text(
-                      "Started in",
-                      style: Theme.of(context).textTheme.bodySmall,
-                    )
-                  ],
-                ),
-              ],
-            ),
-            const SizedBox(height: 10),
+            // Small image previews in a horizontal ListView
             Container(
-              height: 180,
-              width: double.maxFinite,
+              height: 70,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: imageList.length,
+                itemBuilder: (context, index) {
+                  return GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        _currentIndex = index;
+                      });
+                    },
+                    child: Container(
+                      margin: EdgeInsets.all(8),
+                      width: 50,
+                      height: 50,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                color: Theme.of(context).colorScheme.secondary.withOpacity(0.1),
-                        image: const DecorationImage(
-                          image: AssetImage('assets/icons/map.png'),
+                        border: Border.all(
+                          color: _currentIndex == index
+                              ? Colors.blue
+                              : Colors.transparent,
+                          width: 2,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                        image: DecorationImage(
+                          image: AssetImage(imageList[index]),
                           fit: BoxFit.cover,
                         ),
-                                    ),
+                      ),
+                    ),
+                  );
+                },
+              ),
             ),
             const SizedBox(height: 15),
-            const Distance(),
+            // Short description
+            Text(
+              "This is a short description of the place. It can include information about the history, features, and other interesting details.",
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
             const SizedBox(height: 20),
-                        ElevatedButton(
+            // "Go" button
+            ElevatedButton(
               onPressed: () {},
               style: ElevatedButton.styleFrom(
                 elevation: 0,
@@ -164,11 +162,26 @@ class TouristDetailsPage extends StatelessWidget {
                   horizontal: 8.0,
                 ),
               ),
-              child: const Text("Join this tour"),
-            )
+              child: const Text("Go"),
+            ),
           ],
         ),
       ),
+    );
+  }
+
+  // Helper method to build columns for location, rating, and distance details
+  Widget _buildDetailColumn(String label, IconData icon) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Icon(icon, color: Theme.of(context).colorScheme.primary),
+        const SizedBox(height: 5),
+        Text(
+          label,
+          style: Theme.of(context).textTheme.bodySmall,
+        ),
+      ],
     );
   }
 }
