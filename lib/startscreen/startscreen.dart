@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class Startscreen extends StatefulWidget {
   const Startscreen({super.key});
@@ -11,74 +12,140 @@ class _StartscreenState extends State<Startscreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          // Gambar di bagian atas
-          Column(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.only(top: 5, bottom: 10, right: 7, left: 7),
+          child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Image.asset(
-                'assets/img/gambar1.jpg', // Ganti dengan path gambar Anda
-                height: 270, // Atur tinggi gambar sesuai kebutuhan
-                width: MediaQuery.of(context)
-                    .size
-                    .width, // Lebar gambar sesuai lebar layar
-                fit: BoxFit
-                    .cover, // Ini akan membuat gambar menutupi ruang yang tersedia
+              // Gambar di bagian atas
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(
+                        27), // Mengatur sudut menjadi bulat
+                    child: Image.asset(
+                      'assets/img/gambar1.jpg',
+                      height: 413,
+                      width: MediaQuery.of(context).size.width,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    child: Text(
+                      'Discover the ideal destination for your next vacation.',
+                      style: GoogleFonts.poppins(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 22,
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    child: Text(
+                      '“Welcome to the journey  of a lifetime! Let’s get started on your adventure. Set your preferences, discover new places, and create memories that last a lifetime. Ready to explore?”',
+                      style: GoogleFonts.poppins(
+                        fontWeight: FontWeight.w200,
+                        fontSize: 12,
+                      ),
+                    ),
+                  ),
+                ],
               ),
-              const SizedBox(height: 15),
-              const Text(
-                'Teks Anda di sini',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold, // Membuat teks menjadi tebal
-                  fontSize: 18, // Ukuran teks yang diinginkan
+              SizedBox(height: 40),
+
+              // Tombol Login
+              ElevatedButton(
+                onPressed: () {
+                  // Tampilkan dialog saat tombol ditekan
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text('Pilih Opsi'),
+                            SizedBox(
+                                height: 20), // Spasi antara teks dan tombol
+                            // Kolom untuk menempatkan TextButton di tengah
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                // Tombol pertama
+                                TextButton(
+                                  child: Text('Opsi 1'),
+                                  onPressed: () {
+                                    // Lakukan aksi ketika opsi 1 ditekan
+                                    print('Opsi 1 ditekan');
+                                    Navigator.of(context).pop(); // Tutup dialog
+                                  },
+                                ),
+                                // Spasi antara tombol
+                                SizedBox(height: 10),
+                                // Tombol kedua
+                                TextButton(
+                                  child: Text('Opsi 2'),
+                                  onPressed: () {
+                                    // Lakukan aksi ketika opsi 2 ditekan
+                                    print('Opsi 2 ditekan');
+                                    Navigator.of(context).pop(); // Tutup dialog
+                                  },
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  );
+                },
+                child: Text('Login', style: GoogleFonts.poppins(fontSize: 18)),
+                style: ElevatedButton.styleFrom(
+                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+                  backgroundColor: Color(0xFFFF9F5A),
+                  foregroundColor: Colors.white,
+                  minimumSize: Size(320, 40),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(27),
+                  ),
                 ),
               ),
-              const Text(
-                'Teks Anda di sini',
-                style: TextStyle(
-                  fontWeight: FontWeight.w200, // Membuat teks menjadi tebal
-                  fontSize: 15, // Ukuran teks yang diinginkan
+
+              SizedBox(height: 20),
+
+// Tombol Sign Up
+              ElevatedButton(
+                onPressed: () {
+                  // Aksi untuk tombol sign up
+                  print('Tombol Sign Up ditekan');
+                },
+                child: Text(
+                  'Sign Up',
+                  style: GoogleFonts.poppins(fontSize: 18),
                 ),
-              ),
+                style: ElevatedButton.styleFrom(
+                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+                  backgroundColor: Color(0xFFFF9F5A),
+                  foregroundColor: Colors.white,
+                  minimumSize: Size(320, 50),
+                  shape: RoundedRectangleBorder(
+                    // Mengatur bentuk menjadi bulat
+                    borderRadius: BorderRadius.circular(
+                        27), // Anda dapat menyesuaikan nilai untuk membuatnya lebih bulat atau kurang bulat
+                  ),
+                ),
+              )
             ],
           ),
-
-          const SizedBox(height: 30),
-
-          // Tombol Login
-          ElevatedButton(
-            onPressed: () {
-              // Aksi untuk tombol login
-              print('Tombol Login ditekan');
-            },
-            style: ElevatedButton.styleFrom(
-              padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
-              backgroundColor: const Color(0xFFFF9F5A), // Warna latar belakang FF9F5A
-              foregroundColor: Colors.white, // Warna teks putih (FFFFFF)
-              minimumSize: const Size(150, 50), // Ukuran minimum untuk tombol
-            ),
-            child: const Text('Login'),
-          ),
-          const SizedBox(height: 20), // Jarak antara tombol Login dan Sign Up
-
-          // Tombol Sign Up
-          ElevatedButton(
-            onPressed: () {
-              // Aksi untuk tombol sign up
-              print('Tombol Sign Up ditekan');
-            },
-            style: ElevatedButton.styleFrom(
-              padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
-              backgroundColor: const Color(0xFFFF9F5A), // Warna latar belakang FF9F5A
-              foregroundColor: Colors.white, // Warna teks putih (FFFFFF)
-              minimumSize: const Size(150, 50), // Ukuran minimum untuk tombol
-            ),
-            child: const Text('Sign Up'),
-          ),
-        ],
+        ),
       ),
     );
   }
