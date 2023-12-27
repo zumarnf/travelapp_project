@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 // import 'package:travelapp/homeguest/homeguestpage.dart';
 // import 'package:travelapp/locationscreen/locationpage.dart';
 
-
 import 'package:travelapp/startscreen/startscreen.dart';
 
 void main() {
@@ -18,9 +17,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'Travel',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(
+            seedColor: const Color.fromRGBO(255, 159, 95, 1)),
         useMaterial3: true,
       ),
       home: Startscreen(),
