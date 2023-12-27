@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:travelapp/homeguest/homeguestpage.dart';
 
 class loginguest extends StatefulWidget {
   const loginguest({super.key});
@@ -189,7 +190,11 @@ class _loginguestState extends State<loginguest> {
               ElevatedButton(
                 onPressed: () {
                   // Aksi untuk tombol sign up
-                  print('Tombol Sign Up ditekan');
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => HomePage(),
+                      ));
                 },
                 child: Text(
                   'Login',
