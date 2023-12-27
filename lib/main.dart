@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:travelapp/homeadmin/homeadminpage.dart';
-import 'package:travelapp/homeguest/homeguestpage.dart';
-import 'package:travelapp/locationscreen/locationpage.dart';
+
+// import 'package:travelapp/homeguest/homeguestpage.dart';
+// import 'package:travelapp/locationscreen/locationpage.dart';
+
 
 import 'package:travelapp/startscreen/startscreen.dart';
 
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: locationpg(),
+      home: Startscreen(),
     );
   }
 }
