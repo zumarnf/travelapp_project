@@ -1,15 +1,105 @@
 import 'package:flutter/material.dart';
 
-class MyWidget extends StatefulWidget {
-  const MyWidget({super.key});
-
+class DestinationForm extends StatefulWidget {
   @override
-  State<MyWidget> createState() => _MyWidgetState();
+  _DestinationFormState createState() => _DestinationFormState();
 }
 
-class _MyWidgetState extends State<MyWidget> {
+class _DestinationFormState extends State<DestinationForm> {
+  final _formKey = GlobalKey<FormState>();
+  String _pictureUrl = '';
+  String _destinationName = '';
+  String _location = '';
+  String _description = '';
+
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Add Destination'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              TextFormField(
+                decoration: InputDecoration(labelText: 'Picture URL'),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter a picture URL';
+                  }
+                  return null;
+                },
+                onSaved: (value) {
+                  _pictureUrl = value!;
+                },
+              ),
+              SizedBox(height: 16),
+              TextFormField(
+                decoration: InputDecoration(labelText: 'Destination Name'),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter a destination name';
+                  }
+                  return null;
+                },
+                onSaved: (value) {
+                  _destinationName = value!;
+                },
+              ),
+              SizedBox(height: 16),
+              TextFormField(
+                decoration: InputDecoration(labelText: 'Location'),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter a location';
+                  }
+                  return null;
+                },
+                onSaved: (value) {
+                  _location = value!;
+                },
+              ),
+              SizedBox(height: 16),
+              TextFormField(
+                decoration: InputDecoration(labelText: 'Description'),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter a description';
+                  }
+                  return null;
+                },
+                onSaved: (value) {
+                  _description = value!;
+                },
+                maxLines: 3,
+              ),
+              SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: () {
+                  _submitForm();
+                },
+                child: Text('Submit'),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _submitForm() {
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
+
+      // Perform actions with the form data (e.g., send to a server)
+      print('Picture URL: $_pictureUrl');
+      print('Destination Name: $_destinationName');
+      print('Location: $_location');
+      print('Description: $_description');
+    }
   }
 }
