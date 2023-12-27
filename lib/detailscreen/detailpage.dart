@@ -80,11 +80,11 @@ class TouristDetailsPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Sea of Peace",
-                      style: Theme.of(context).textTheme.titleLarge,
-                    ),
-                    const SizedBox(height: 5),
-                    Text(
+                "Sea of Peace",
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+            const SizedBox(height: 5),
+            Text(
                       "Portic Team 8km",
                       style: Theme.of(context).textTheme.bodySmall,
                     )
@@ -129,7 +129,7 @@ class TouristDetailsPage extends StatelessWidget {
                             color: Theme.of(context).colorScheme.primary,
                           ),
                     ),
-                    const SizedBox(height: 5),
+            const SizedBox(height: 5),
                     Text(
                       "Started in",
                       style: Theme.of(context).textTheme.bodySmall,
@@ -142,19 +142,19 @@ class TouristDetailsPage extends StatelessWidget {
             Container(
               height: 180,
               width: double.maxFinite,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
                 color: Theme.of(context).colorScheme.secondary.withOpacity(0.1),
-                image: const DecorationImage(
-                  image: AssetImage('assets/icons/map.png'),
-                  fit: BoxFit.cover,
-                ),
-              ),
+                        image: const DecorationImage(
+                          image: AssetImage('assets/icons/map.png'),
+                          fit: BoxFit.cover,
+                        ),
+                                    ),
             ),
             const SizedBox(height: 15),
             const Distance(),
             const SizedBox(height: 20),
-            ElevatedButton(
+                        ElevatedButton(
               onPressed: () {},
               style: ElevatedButton.styleFrom(
                 elevation: 0,
