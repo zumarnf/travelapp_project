@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class DestinationForm extends StatefulWidget {
   @override
@@ -25,17 +26,19 @@ class _DestinationFormState extends State<DestinationForm> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              TextFormField(
-                decoration: InputDecoration(labelText: 'Picture URL'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter a picture URL';
+              ElevatedButton(
+                onPressed: () async {
+                  final pickedFile = await ImagePicker()
+                      .pickImage(source: ImageSource.gallery);
+
+                  if (pickedFile != null) {
+                    setState(() {
+                      _pictureUrl = pickedFile
+                          .path; // Atau Anda bisa menyimpan di cloud storage dan mendapatkan URL
+                    });
                   }
-                  return null;
                 },
-                onSaved: (value) {
-                  _pictureUrl = value!;
-                },
+                child: Text('Upload Image'),
               ),
               SizedBox(height: 16),
               TextFormField(

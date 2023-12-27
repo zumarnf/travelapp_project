@@ -5,6 +5,7 @@ import 'package:travelapp/homeguest/widgets/location_card.dart';
 import 'package:travelapp/homeguest/widgets/nearby_places.dart';
 import 'package:travelapp/homeguest/widgets/reccomended_places.dart';
 import 'package:travelapp/homeguest/widgets/tourist_places.dart';
+import 'package:travelapp/locationscreen/locationpage.dart';
 import 'package:travelapp/navbar/custnavbar.dart';
 // import 'package:travelapp/navbar/custnavbar.dart';
 
@@ -15,9 +16,12 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.location_on_outlined), onPressed: () {}),
-      floatingActionButtonLocation: 
-      FloatingActionButtonLocation.centerDocked,
+          child: Icon(Icons.location_on_outlined),
+          onPressed: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => locationpg()));
+          }),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: buildAnimatedBottomBar(),
       appBar: AppBar(
         elevation: 0,

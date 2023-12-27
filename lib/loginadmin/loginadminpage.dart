@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:travelapp/homeadmin/homeadminpage.dart';
 
 class loginadmin extends StatefulWidget {
   const loginadmin({super.key});
@@ -188,8 +189,12 @@ class _loginadminState extends State<loginadmin> {
               Spacer(),
               ElevatedButton(
                 onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => HomeAdmin()),
+                    // Aksi untuk tombol sign up
+                  );
                   // Aksi untuk tombol sign up
-                  print('Tombol Sign Up ditekan');
                 },
                 child: Text(
                   'Login',
