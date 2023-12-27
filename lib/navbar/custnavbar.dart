@@ -49,10 +49,8 @@ import 'package:flutter/material.dart';
 Widget buildAnimatedBottomBar() {
   // list of icons that required by animated navigation bar
   List<IconData> iconList = [
-    Icons.abc_sharp,
-    Icons.access_time,
-    Icons.holiday_village,
-    Icons.account_tree_rounded
+    Icons.home_outlined,
+    Icons.person_2_outlined,
   ];
 
   // default index of the tabs
@@ -66,6 +64,6 @@ Widget buildAnimatedBottomBar() {
     notchMargin: 8, // Default notch margin is 8
     notchSmoothness: NotchSmoothness.verySmoothEdge,
     onTap: (index) => _bottomNavIndex = index,
-    backgroundColor: Colors.blue,
+    backgroundColor: Color.fromRGBO(255, 159, 90, 1),
   );
 }
