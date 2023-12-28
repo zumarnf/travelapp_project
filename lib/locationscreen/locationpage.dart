@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:travelapp/homeguest/widgets/location_card.dart';
 
 class locationpg extends StatefulWidget {
   @override
@@ -38,11 +39,24 @@ class _locationpgState extends State<locationpg> {
 
       setState(() {
         isLoading = false;
+        latitude = position.latitude;
+        longitude = position.longitude;
       });
 
-      latitude = position.latitude;
-      longitude = position.longitude;
+      // Show location in the LocationCard
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Location: $latitude, $longitude"),
+        ),
+      );
+
+      // Navigate back to the home page
+      Navigator.pop(context);
     } catch (e) {
+      setState(() {
+        isLoading = false;
+      });
+
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text("Error: $e"),
@@ -59,16 +73,17 @@ class _locationpgState extends State<locationpg> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(
-              Icons
-                  .location_on_outlined, // Anda dapat mengganti ikon dengan yang lain jika diinginkan
-              size: 75, // Ukuran ikon
-              color: const Color.fromARGB(255, 0, 0, 0), // Warna ikon
+              Icons.location_on_outlined,
+              size: 75,
+              color: const Color.fromARGB(255, 0, 0, 0),
             ),
             Padding(
               padding: const EdgeInsets.only(bottom: 20, top: 25),
-              child: Text("PLEASE ALLOW LOCATION TO GET LOCATION",
-                  style: GoogleFonts.poppins(
-                      fontWeight: FontWeight.w700, fontSize: 12)),
+              child: Text(
+                "PLEASE ALLOW LOCATION TO GET LOCATION",
+                style: GoogleFonts.poppins(
+                    fontWeight: FontWeight.w700, fontSize: 12),
+              ),
             ),
             if (isLoading)
               CircularProgressIndicator()
@@ -82,24 +97,14 @@ class _locationpgState extends State<locationpg> {
                   foregroundColor: Colors.white,
                   minimumSize: Size(261, 44),
                   shape: RoundedRectangleBorder(
-                    // Mengatur bentuk menjadi bulat
-                    borderRadius: BorderRadius.circular(
-                        27), // Anda dapat menyesuaikan nilai untuk membuatnya lebih bulat atau kurang bulat
+                    borderRadius: BorderRadius.circular(27),
                   ),
                 ),
               ),
             SizedBox(height: 15),
-            Column(
-              children: [
-                Text(
-                  "YOUR LOCATION",
-                  style: GoogleFonts.poppins(
-                      fontSize: 18, fontWeight: FontWeight.w700),
-                ),
-                Text("$latitude, $longitude",
-                    style: GoogleFonts.poppins(
-                        fontSize: 20, fontWeight: FontWeight.w500)),
-              ],
+            LocationCard(
+              latitude: latitude,
+              longitude: longitude,
             ),
           ],
         ),
