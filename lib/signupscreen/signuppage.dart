@@ -28,12 +28,28 @@ class _SignupPageState extends State<SignupPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  'TRAVEL',
-                  style: GoogleFonts.wendyOne(
-                    fontSize: 41.0,
-                    fontWeight: FontWeight.bold,
-                  ),
+                Row(
+                  children: [
+                    IconButton(
+                      icon: Icon(Icons.arrow_back), // Ikon untuk tombol back
+                      onPressed: () {
+                        Navigator.of(context)
+                            .pop(); // Kembali ke halaman sebelumnya
+                      },
+                    ),
+                    Spacer(), // Spacer ini akan menempatkan 'TRAVEL' di tengah
+                    Text(
+                      'TRAVEL',
+                      style: GoogleFonts.wendyOne(
+                        fontSize: 41.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Spacer(),
+                    SizedBox(
+                      width: 15,
+                    ) // Ini hanya untuk memastikan tombol back tetap di sisi kiri
+                  ],
                 ),
                 SizedBox(height: 30.0),
                 Align(
@@ -334,7 +350,6 @@ class _SignupPageState extends State<SignupPage> {
                       ),
                     ),
                   ),
-                  // ... (Konfigurasi lainnya tetap sama)
                   keyboardType: TextInputType
                       .number, // Mengatur tipe keyboard untuk hanya angka
                   inputFormatters: <TextInputFormatter>[

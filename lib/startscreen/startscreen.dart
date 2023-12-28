@@ -74,9 +74,11 @@ class _StartscreenState extends State<Startscreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Text('Login As'),
+                            Text('Login As',
+                                style: GoogleFonts.poppins(
+                                    fontWeight: FontWeight.bold)),
                             SizedBox(
-                                height: 20), // Spasi antara teks dan tombol
+                                height: 20), 
                             // Kolom untuk menempatkan TextButton di tengah
                             Column(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -84,7 +86,10 @@ class _StartscreenState extends State<Startscreen> {
                               children: [
                                 // Tombol pertama
                                 TextButton(
-                                  child: Text('Guest'),
+                                  child: Text(
+                                    'Guest',
+                                    style: GoogleFonts.poppins(),
+                                  ),
                                   onPressed: () {
                                     // Lakukan aksi ketika opsi 1 ditekan
 
@@ -99,7 +104,8 @@ class _StartscreenState extends State<Startscreen> {
                                 SizedBox(height: 10),
                                 // Tombol kedua
                                 TextButton(
-                                  child: Text('Opsi 2'),
+                                  child: Text('Admin',
+                                      style: GoogleFonts.poppins()),
                                   onPressed: () {
                                     // Lakukan aksi ketika opsi 2 ditekan
                                     Navigator.push(

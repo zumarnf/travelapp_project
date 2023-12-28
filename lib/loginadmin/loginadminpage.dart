@@ -21,14 +21,28 @@ class _loginadminState extends State<loginadmin> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               // Teks Bold di tengah
-              Text(
-                'TRAVEL',
-                style: GoogleFonts.wendyOne(
-                  textStyle: TextStyle(
-                    fontSize: 41.0,
-                    fontWeight: FontWeight.bold,
+              Row(
+                children: [
+                  IconButton(
+                    icon: Icon(Icons.arrow_back), // Ikon untuk tombol back
+                    onPressed: () {
+                      Navigator.of(context)
+                          .pop(); // Kembali ke halaman sebelumnya
+                    },
                   ),
-                ),
+                  Spacer(), // Spacer ini akan menempatkan 'TRAVEL' di tengah
+                  Text(
+                    'TRAVEL',
+                    style: GoogleFonts.wendyOne(
+                      fontSize: 41.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Spacer(),
+                  SizedBox(
+                    width: 25,
+                  ) // Ini hanya untuk memastikan tombol back tetap di sisi kiri
+                ],
               ),
               SizedBox(height: 100), // Jarak antara teks bold dan teks biasa
 
