@@ -7,6 +7,7 @@ import 'package:travelapp/homeguest/widgets/reccomended_places.dart';
 import 'package:travelapp/homeguest/widgets/tourist_places.dart';
 import 'package:travelapp/locationscreen/locationpage.dart';
 import 'package:travelapp/navbar/custnavbar.dart';
+// import 'package:travelapp/locationscreen/locationpage.dart';
 // import 'package:travelapp/navbar/custnavbar.dart';
 
 class HomePage extends StatelessWidget {

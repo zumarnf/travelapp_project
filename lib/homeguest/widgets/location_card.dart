@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 
 class LocationCard extends StatelessWidget {
-  const LocationCard({Key? key}) : super(key: key);
+  final double? latitude;
+  final double? longitude;
+
+  const LocationCard({Key? key, this.latitude, this.longitude})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,17 +26,28 @@ class LocationCard extends StatelessWidget {
               children: [
                 Text(
                   "Your Location",
-                  style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                  style: Theme.of(context).textTheme.headline6!.copyWith(
                         color: Theme.of(context).primaryColor,
                       ),
                 ),
                 const SizedBox(height: 5),
-                Text(
-                  "Wonokromo, Surabaya",
-                  style: Theme.of(context).textTheme.labelLarge,
-                )
+                Builder(
+                  builder: (BuildContext context) {
+                    if (latitude != null && longitude != null) {
+                      return Text(
+                        "$latitude, $longitude",
+                        style: Theme.of(context).textTheme.subtitle1,
+                      );
+                    } else {
+                      return Text(
+                        "Location not available",
+                        style: Theme.of(context).textTheme.subtitle1,
+                      );
+                    }
+                  },
+                ),
               ],
-            )
+            ),
           ],
         ),
       ),
