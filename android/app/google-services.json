@@ -1,13 +1,14 @@
 {
   "project_info": {
-    "project_number": "964108833235",
-    "project_id": "travelapp-26466",
-    "storage_bucket": "travelapp-26466.appspot.com"
+    "project_number": "1081899432375",
+    "project_id": "tracelapp",
+    "storage_bucket": "tracelapp.appspot.com"
+
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:964108833235:android:5f1565274c416826af9f26",
+        "mobilesdk_app_id": "1:1081899432375:android:16f2bd0108f6ee524cd032",
         "android_client_info": {
           "package_name": "com.example.travelapp"
         }
@@ -15,7 +16,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBnrqHV5ZVpAIBX3binHqcsRvG-Y0HXrJg"
+          "current_key": "AIzaSyC3UmkN2etKz_POn40-YsV3HF60vXSymZY"
         }
       ],
       "services": {
