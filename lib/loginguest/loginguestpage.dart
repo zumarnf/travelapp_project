@@ -1,36 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:travelapp/homeguest/homeguestpage.dart';
 
-class loginguest extends StatefulWidget {
-  const loginguest({super.key});
+class LoginGuest extends StatefulWidget {
+  const LoginGuest({Key? key}) : super(key: key);
 
   @override
-  State<loginguest> createState() => _loginguestState();
+  _LoginGuestState createState() => _LoginGuestState();
 }
 
-class _loginguestState extends State<loginguest> {
+class _LoginGuestState extends State<LoginGuest> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
         child: Padding(
-          padding:
-              EdgeInsets.only(top: 80.0, right: 35, bottom: 40.0, left: 35),
+          padding: EdgeInsets.only(top: 80.0, right: 35, bottom: 40.0, left: 35),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // Teks Bold di tengah
               Row(
                 children: [
                   IconButton(
-                    icon: Icon(Icons.arrow_back), // Ikon untuk tombol back
+                    icon: Icon(Icons.arrow_back),
                     onPressed: () {
-                      Navigator.of(context)
-                          .pop(); // Kembali ke halaman sebelumnya
+                      Navigator.of(context).pop();
                     },
                   ),
-                  Spacer(), // Spacer ini akan menempatkan 'TRAVEL' di tengah
+                  Spacer(),
                   Text(
                     'TRAVEL',
                     style: GoogleFonts.wendyOne(
@@ -41,12 +42,10 @@ class _loginguestState extends State<loginguest> {
                   Spacer(),
                   SizedBox(
                     width: 25,
-                  ) // Ini hanya untuk memastikan tombol back tetap di sisi kiri
+                  )
                 ],
               ),
-              SizedBox(height: 100), // Jarak antara teks bold dan teks biasa
-
-              // Teks biasa di kiri/start
+              SizedBox(height: 100),
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
@@ -87,24 +86,20 @@ class _loginguestState extends State<loginguest> {
               ),
               SizedBox(height: 10),
               TextFormField(
+                controller: _emailController,
                 decoration: InputDecoration(
-                  filled: true, // Mengisi latar belakang dengan warna
-                  fillColor:
-                      Color.fromRGBO(240, 240, 240, 1), // Warna latar belakang
-                  prefixIcon:
-                      Icon(Icons.email_outlined), // Ikon di sebelah kiri
-                  labelText: 'Enter your email', // Label untuk TextField
+                  filled: true,
+                  fillColor: Color.fromRGBO(240, 240, 240, 1),
+                  prefixIcon: Icon(Icons.email_outlined),
+                  labelText: 'Enter your email',
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(
-                        10.0), // Menambahkan border radius
+                    borderRadius: BorderRadius.circular(10.0),
                     borderSide: BorderSide(
-                      // Opsi untuk sisi border
-                      color: Color.fromRGBO(240, 240, 240, 1), // Warna border
-                      width: 1.0, // Lebar border
+                      color: Color.fromRGBO(240, 240, 240, 1),
+                      width: 1.0,
                     ),
                   ),
                   enabledBorder: OutlineInputBorder(
-                    // Opsi untuk border ketika aktif
                     borderRadius: BorderRadius.circular(25.0),
                     borderSide: BorderSide(
                       color: Color.fromRGBO(240, 240, 240, 1),
@@ -112,17 +107,14 @@ class _loginguestState extends State<loginguest> {
                     ),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    // Opsi untuk border ketika fokus
                     borderRadius: BorderRadius.circular(27.0),
                     borderSide: BorderSide(
-                      color: Color.fromRGBO(
-                          255, 159, 90, 1), // Warna border ketika fokus
-                      width: 2.0, // Lebar border ketika fokus
+                      color: Color.fromRGBO(255, 159, 90, 1),
+                      width: 2.0,
                     ),
                   ),
                 ),
-                keyboardType:
-                    TextInputType.emailAddress, // Tipe keyboard untuk email
+                keyboardType: TextInputType.emailAddress,
               ),
               SizedBox(height: 15),
               Align(
@@ -139,23 +131,20 @@ class _loginguestState extends State<loginguest> {
               ),
               SizedBox(height: 10),
               TextFormField(
+                controller: _passwordController,
                 decoration: InputDecoration(
-                  filled: true, // Mengisi latar belakang dengan warna
-                  fillColor:
-                      Color.fromRGBO(240, 240, 240, 1), // Warna latar belakang
-                  prefixIcon: Icon(Icons.lock_outline), // Ikon di sebelah kiri
-                  labelText: 'Enter your password', // Label untuk TextField
+                  filled: true,
+                  fillColor: Color.fromRGBO(240, 240, 240, 1),
+                  prefixIcon: Icon(Icons.lock_outline),
+                  labelText: 'Enter your password',
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(
-                        10.0), // Menambahkan border radius
+                    borderRadius: BorderRadius.circular(10.0),
                     borderSide: BorderSide(
-                      // Opsi untuk sisi border
-                      color: Color.fromRGBO(240, 240, 240, 1), // Warna border
-                      width: 1.0, // Lebar border
+                      color: Color.fromRGBO(240, 240, 240, 1),
+                      width: 1.0,
                     ),
                   ),
                   enabledBorder: OutlineInputBorder(
-                    // Opsi untuk border ketika aktif
                     borderRadius: BorderRadius.circular(25.0),
                     borderSide: BorderSide(
                       color: Color.fromRGBO(240, 240, 240, 1),
@@ -163,28 +152,24 @@ class _loginguestState extends State<loginguest> {
                     ),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    // Opsi untuk border ketika fokus
                     borderRadius: BorderRadius.circular(27.0),
                     borderSide: BorderSide(
-                      color: Color.fromRGBO(
-                          255, 159, 90, 1), // Warna border ketika fokus
-                      width: 2.0, // Lebar border ketika fokus
+                      color: Color.fromRGBO(255, 159, 90, 1),
+                      width: 2.0,
                     ),
                   ),
                 ),
-                keyboardType:
-                    TextInputType.visiblePassword, // Tipe keyboard untuk email
+                keyboardType: TextInputType.visiblePassword,
+                obscureText: true,
               ),
               SizedBox(height: 15),
               TextButton(
                 onPressed: () {
-                  // Aksi yang ingin Anda lakukan saat teks ditekan
+                  // Implement your logic for password recovery here
                   print('Forgot password tapped!');
-                  // Anda dapat menambahkan logika untuk navigasi atau tindakan lainnya di sini.
                 },
                 style: TextButton.styleFrom(
-                  padding: EdgeInsets
-                      .zero, // Mengatur padding menjadi nol untuk memastikan tidak ada ruang tambahan
+                  padding: EdgeInsets.zero,
                 ),
                 child: Align(
                   alignment: Alignment.centerLeft,
@@ -202,12 +187,27 @@ class _loginguestState extends State<loginguest> {
               ),
               Spacer(),
               ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => HomePage()),
-                    // Aksi untuk tombol sign up
-                  );
+                onPressed: () async {
+                  try {
+                    await FirebaseAuth.instance.signInWithEmailAndPassword(
+                      email: _emailController.text,
+                      password: _passwordController.text,
+                    );
+                    // If login is successful, navigate to the home page
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => HomePage()),
+                    );
+                  } catch (e) {
+                    // Handle login errors, you can show a Snackbar or Dialog with the error message
+                    print('Login failed: $e');
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('Login failed: $e'),
+                        backgroundColor: Colors.red,
+                      ),
+                    );
+                  }
                 },
                 child: Text(
                   'Login',
@@ -219,9 +219,7 @@ class _loginguestState extends State<loginguest> {
                   foregroundColor: Colors.white,
                   minimumSize: Size(320, 50),
                   shape: RoundedRectangleBorder(
-                    // Mengatur bentuk menjadi bulat
-                    borderRadius: BorderRadius.circular(
-                        27), // Anda dapat menyesuaikan nilai untuk membuatnya lebih bulat atau kurang bulat
+                    borderRadius: BorderRadius.circular(27),
                   ),
                 ),
               )
