@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:travelapp/homeadmin/homeadminpage.dart';
@@ -10,6 +11,10 @@ class loginadmin extends StatefulWidget {
 }
 
 class _loginadminState extends State<loginadmin> {
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+
+  FirebaseAuth _auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -87,24 +92,20 @@ class _loginadminState extends State<loginadmin> {
               ),
               SizedBox(height: 10),
               TextFormField(
+                controller: _emailController,
                 decoration: InputDecoration(
-                  filled: true, // Mengisi latar belakang dengan warna
-                  fillColor:
-                      Color.fromRGBO(240, 240, 240, 1), // Warna latar belakang
-                  prefixIcon:
-                      Icon(Icons.email_outlined), // Ikon di sebelah kiri
-                  labelText: 'Enter your email', // Label untuk TextField
+                  filled: true,
+                  fillColor: Color.fromRGBO(240, 240, 240, 1),
+                  prefixIcon: Icon(Icons.email_outlined),
+                  labelText: 'Enter your email',
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(
-                        10.0), // Menambahkan border radius
+                    borderRadius: BorderRadius.circular(10.0),
                     borderSide: BorderSide(
-                      // Opsi untuk sisi border
-                      color: Color.fromRGBO(240, 240, 240, 1), // Warna border
-                      width: 1.0, // Lebar border
+                      color: Color.fromRGBO(240, 240, 240, 1),
+                      width: 1.0,
                     ),
                   ),
                   enabledBorder: OutlineInputBorder(
-                    // Opsi untuk border ketika aktif
                     borderRadius: BorderRadius.circular(25.0),
                     borderSide: BorderSide(
                       color: Color.fromRGBO(240, 240, 240, 1),
@@ -112,17 +113,14 @@ class _loginadminState extends State<loginadmin> {
                     ),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    // Opsi untuk border ketika fokus
                     borderRadius: BorderRadius.circular(27.0),
                     borderSide: BorderSide(
-                      color: Color.fromRGBO(
-                          255, 159, 90, 1), // Warna border ketika fokus
-                      width: 2.0, // Lebar border ketika fokus
+                      color: Color.fromRGBO(255, 159, 90, 1),
+                      width: 2.0,
                     ),
                   ),
                 ),
-                keyboardType:
-                    TextInputType.emailAddress, // Tipe keyboard untuk email
+                keyboardType: TextInputType.emailAddress,
               ),
               SizedBox(height: 15),
               Align(
@@ -139,6 +137,7 @@ class _loginadminState extends State<loginadmin> {
               ),
               SizedBox(height: 10),
               TextFormField(
+                controller: _passwordController,
                 decoration: InputDecoration(
                   filled: true, // Mengisi latar belakang dengan warna
                   fillColor:
@@ -202,13 +201,37 @@ class _loginadminState extends State<loginadmin> {
               ),
               Spacer(),
               ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => HomeAdmin()),
-                    // Aksi untuk tombol sign up
-                  );
-                  // Aksi untuk tombol sign up
+                onPressed: () async {
+                  print('Entered Email before trim: ${_emailController.text}');
+                  print(
+                      'Entered Password before trim: ${_passwordController.text}');
+                  try {
+                    UserCredential userCredential =
+                        await _auth.signInWithEmailAndPassword(
+                      email: _emailController.text.trim(),
+                      password: _passwordController.text.trim(),
+                    );
+                    print('Entered Email: ${_emailController.text.trim()}');
+
+                    if (userCredential.user != null) {
+                      // Periksa apakah email pengguna yang masuk cocok dengan email admin
+                      if (userCredential.user!.email == 'admin@admin.com') {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => HomeAdmin()),
+                        );
+                      } else {
+                        print('Akses ditolak. Pengguna bukan admin.');
+                        // Tampilkan pesan kesalahan atau lakukan tindakan lain untuk pengguna bukan admin
+                      }
+                    }
+                  } on FirebaseAuthException catch (e) {
+                    print('Kesalahan Otentikasi Firebase: ${e.message}');
+                    // Handle kesalahan otentikasi lainnya di sini
+                    print('Entered Email: ${_emailController.text.trim()}');
+                    print(
+                        'Entered Password: ${_passwordController.text.trim()}');
+                  }
                 },
                 child: Text(
                   'Login',
