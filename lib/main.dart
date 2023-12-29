@@ -7,6 +7,7 @@ import 'package:travelapp/firebase_options.dart';
 // import 'package:travelapp/locationscreen/locationpage.dart';
 
 import 'package:travelapp/startscreen/startscreen.dart';
+import 'package:travelapp/profile/profilepage.dart';
 
 Future<void> main() async {
   // WidgetsFlutterBinding.ensureInitialized();
