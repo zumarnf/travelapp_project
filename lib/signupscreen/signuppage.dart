@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-import 'package:travelapp/auth/auth_service.dart';
+import 'package:travelapp/loginguest/loginguestpage.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({Key? key}) : super(key: key);
@@ -12,11 +12,11 @@ class SignupPage extends StatefulWidget {
 }
 
 class _SignupPageState extends State<SignupPage> {
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController addressController = TextEditingController();
-  final TextEditingController phoneNumberController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _addressController = TextEditingController();
+  final TextEditingController _phoneNumberController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -32,13 +32,12 @@ class _SignupPageState extends State<SignupPage> {
                 Row(
                   children: [
                     IconButton(
-                      icon: Icon(Icons.arrow_back), // Ikon untuk tombol back
+                      icon: Icon(Icons.arrow_back),
                       onPressed: () {
-                        Navigator.of(context)
-                            .pop(); // Kembali ke halaman sebelumnya
+                        Navigator.of(context).pop();
                       },
                     ),
-                    Spacer(), // Spacer ini akan menempatkan 'TRAVEL' di tengah
+                    Spacer(),
                     Text(
                       'TRAVEL',
                       style: GoogleFonts.wendyOne(
@@ -47,9 +46,7 @@ class _SignupPageState extends State<SignupPage> {
                       ),
                     ),
                     Spacer(),
-                    SizedBox(
-                      width: 15,
-                    ) // Ini hanya untuk memastikan tombol back tetap di sisi kiri
+                    SizedBox(width: 15),
                   ],
                 ),
                 SizedBox(height: 30.0),
@@ -78,25 +75,20 @@ class _SignupPageState extends State<SignupPage> {
                 ),
                 SizedBox(height: 5),
                 TextFormField(
-                  controller: emailController,
+                  controller: _emailController,
                   decoration: InputDecoration(
-                    filled: true, // Mengisi latar belakang dengan warna
-                    fillColor: Color.fromRGBO(
-                        240, 240, 240, 1), // Warna latar belakang
-                    prefixIcon:
-                        Icon(Icons.email_outlined), // Ikon di sebelah kiri
-                    labelText: 'Enter your email', // Label untuk TextField
+                    filled: true,
+                    fillColor: Color.fromRGBO(240, 240, 240, 1),
+                    prefixIcon: Icon(Icons.email_outlined),
+                    labelText: 'Enter your email',
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(
-                          10.0), // Menambahkan border radius
+                      borderRadius: BorderRadius.circular(10.0),
                       borderSide: BorderSide(
-                        // Opsi untuk sisi border
-                        color: Color.fromRGBO(240, 240, 240, 1), // Warna border
-                        width: 1.0, // Lebar border
+                        color: Color.fromRGBO(240, 240, 240, 1),
+                        width: 1.0,
                       ),
                     ),
                     enabledBorder: OutlineInputBorder(
-                      // Opsi untuk border ketika aktif
                       borderRadius: BorderRadius.circular(25.0),
                       borderSide: BorderSide(
                         color: Color.fromRGBO(240, 240, 240, 1),
@@ -104,12 +96,10 @@ class _SignupPageState extends State<SignupPage> {
                       ),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      // Opsi untuk border ketika fokus
                       borderRadius: BorderRadius.circular(27.0),
                       borderSide: BorderSide(
-                        color: Color.fromRGBO(
-                            255, 159, 90, 1), // Warna border ketika fokus
-                        width: 2.0, // Lebar border ketika fokus
+                        color: Color.fromRGBO(255, 159, 90, 1),
+                        width: 2.0,
                       ),
                     ),
                   ),
@@ -136,25 +126,20 @@ class _SignupPageState extends State<SignupPage> {
                 ),
                 SizedBox(height: 5),
                 TextFormField(
-                  controller: passwordController,
+                  controller: _passwordController,
                   decoration: InputDecoration(
-                    filled: true, // Mengisi latar belakang dengan warna
-                    fillColor: Color.fromRGBO(
-                        240, 240, 240, 1), // Warna latar belakang
-                    prefixIcon:
-                        Icon(Icons.lock_outline), // Ikon di sebelah kiri
-                    labelText: 'Enter your password', // Label untuk TextField
+                    filled: true,
+                    fillColor: Color.fromRGBO(240, 240, 240, 1),
+                    prefixIcon: Icon(Icons.lock_outline),
+                    labelText: 'Enter your password',
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(
-                          10.0), // Menambahkan border radius
+                      borderRadius: BorderRadius.circular(10.0),
                       borderSide: BorderSide(
-                        // Opsi untuk sisi border
-                        color: Color.fromRGBO(240, 240, 240, 1), // Warna border
-                        width: 1.0, // Lebar border
+                        color: Color.fromRGBO(240, 240, 240, 1),
+                        width: 1.0,
                       ),
                     ),
                     enabledBorder: OutlineInputBorder(
-                      // Opsi untuk border ketika aktif
                       borderRadius: BorderRadius.circular(25.0),
                       borderSide: BorderSide(
                         color: Color.fromRGBO(240, 240, 240, 1),
@@ -162,18 +147,14 @@ class _SignupPageState extends State<SignupPage> {
                       ),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      // Opsi untuk border ketika fokus
                       borderRadius: BorderRadius.circular(27.0),
                       borderSide: BorderSide(
-                        color: Color.fromRGBO(
-                            255, 159, 90, 1), // Warna border ketika fokus
-                        width: 2.0, // Lebar border ketika fokus
+                        color: Color.fromRGBO(255, 159, 90, 1),
+                        width: 2.0,
                       ),
                     ),
                   ),
-                  // ... (Konfigurasi lainnya tetap sama)
-                  keyboardType: TextInputType
-                      .visiblePassword, // Tipe keyboard untuk email
+                  keyboardType: TextInputType.visiblePassword,
                   obscureText: true,
                   validator: (value) {
                     if (value!.isEmpty) {
@@ -197,25 +178,20 @@ class _SignupPageState extends State<SignupPage> {
                 ),
                 SizedBox(height: 5),
                 TextFormField(
-                  controller: nameController,
+                  controller: _nameController,
                   decoration: InputDecoration(
-                    filled: true, // Mengisi latar belakang dengan warna
-                    fillColor: Color.fromRGBO(
-                        240, 240, 240, 1), // Warna latar belakang
-                    prefixIcon:
-                        Icon(Icons.person_2_outlined), // Ikon di sebelah kiri
-                    labelText: 'Enter your name', // Label untuk TextField
+                    filled: true,
+                    fillColor: Color.fromRGBO(240, 240, 240, 1),
+                    prefixIcon: Icon(Icons.person_2_outlined),
+                    labelText: 'Enter your name',
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(
-                          10.0), // Menambahkan border radius
+                      borderRadius: BorderRadius.circular(10.0),
                       borderSide: BorderSide(
-                        // Opsi untuk sisi border
-                        color: Color.fromRGBO(240, 240, 240, 1), // Warna border
-                        width: 1.0, // Lebar border
+                        color: Color.fromRGBO(240, 240, 240, 1),
+                        width: 1.0,
                       ),
                     ),
                     enabledBorder: OutlineInputBorder(
-                      // Opsi untuk border ketika aktif
                       borderRadius: BorderRadius.circular(25.0),
                       borderSide: BorderSide(
                         color: Color.fromRGBO(240, 240, 240, 1),
@@ -223,17 +199,13 @@ class _SignupPageState extends State<SignupPage> {
                       ),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      // Opsi untuk border ketika fokus
                       borderRadius: BorderRadius.circular(27.0),
                       borderSide: BorderSide(
-                        color: Color.fromRGBO(
-                            255, 159, 90, 1), // Warna border ketika fokus
-                        width: 2.0, // Lebar border ketika fokus
+                        color: Color.fromRGBO(255, 159, 90, 1),
+                        width: 2.0,
                       ),
                     ),
                   ),
-                  // ... (Konfigurasi lainnya tetap sama)
-
                   validator: (value) {
                     if (value!.isEmpty) {
                       return 'Name cannot be empty';
@@ -256,25 +228,20 @@ class _SignupPageState extends State<SignupPage> {
                 ),
                 SizedBox(height: 5),
                 TextFormField(
-                  controller: addressController,
+                  controller: _addressController,
                   decoration: InputDecoration(
-                    filled: true, // Mengisi latar belakang dengan warna
-                    fillColor: Color.fromRGBO(
-                        240, 240, 240, 1), // Warna latar belakang
-                    prefixIcon:
-                        Icon(Icons.map_outlined), // Ikon di sebelah kiri
-                    labelText: 'Enter your Address', // Label untuk TextField
+                    filled: true,
+                    fillColor: Color.fromRGBO(240, 240, 240, 1),
+                    prefixIcon: Icon(Icons.map_outlined),
+                    labelText: 'Enter your Address',
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(
-                          10.0), // Menambahkan border radius
+                      borderRadius: BorderRadius.circular(10.0),
                       borderSide: BorderSide(
-                        // Opsi untuk sisi border
-                        color: Color.fromRGBO(240, 240, 240, 1), // Warna border
-                        width: 1.0, // Lebar border
+                        color: Color.fromRGBO(240, 240, 240, 1),
+                        width: 1.0,
                       ),
                     ),
                     enabledBorder: OutlineInputBorder(
-                      // Opsi untuk border ketika aktif
                       borderRadius: BorderRadius.circular(25.0),
                       borderSide: BorderSide(
                         color: Color.fromRGBO(240, 240, 240, 1),
@@ -282,17 +249,13 @@ class _SignupPageState extends State<SignupPage> {
                       ),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      // Opsi untuk border ketika fokus
                       borderRadius: BorderRadius.circular(27.0),
                       borderSide: BorderSide(
-                        color: Color.fromRGBO(
-                            255, 159, 90, 1), // Warna border ketika fokus
-                        width: 2.0, // Lebar border ketika fokus
+                        color: Color.fromRGBO(255, 159, 90, 1),
+                        width: 2.0,
                       ),
                     ),
                   ),
-                  // ... (Konfigurasi lainnya tetap sama)
-
                   validator: (value) {
                     if (value!.isEmpty) {
                       return 'Address cannot be empty';
@@ -315,26 +278,20 @@ class _SignupPageState extends State<SignupPage> {
                 ),
                 SizedBox(height: 5),
                 TextFormField(
-                  controller: phoneNumberController,
+                  controller: _phoneNumberController,
                   decoration: InputDecoration(
-                    filled: true, // Mengisi latar belakang dengan warna
-                    fillColor: Color.fromRGBO(
-                        240, 240, 240, 1), // Warna latar belakang
-                    prefixIcon: Icon(
-                        Icons.phone_iphone_outlined), // Ikon di sebelah kiri
-                    labelText:
-                        'Enter your phone number', // Label untuk TextField
+                    filled: true,
+                    fillColor: Color.fromRGBO(240, 240, 240, 1),
+                    prefixIcon: Icon(Icons.phone_outlined),
+                    labelText: 'Enter your Phone Number',
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(
-                          10.0), // Menambahkan border radius
+                      borderRadius: BorderRadius.circular(10.0),
                       borderSide: BorderSide(
-                        // Opsi untuk sisi border
-                        color: Color.fromRGBO(240, 240, 240, 1), // Warna border
-                        width: 1.0, // Lebar border
+                        color: Color.fromRGBO(240, 240, 240, 1),
+                        width: 1.0,
                       ),
                     ),
                     enabledBorder: OutlineInputBorder(
-                      // Opsi untuk border ketika aktif
                       borderRadius: BorderRadius.circular(25.0),
                       borderSide: BorderSide(
                         color: Color.fromRGBO(240, 240, 240, 1),
@@ -342,20 +299,14 @@ class _SignupPageState extends State<SignupPage> {
                       ),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      // Opsi untuk border ketika fokus
                       borderRadius: BorderRadius.circular(27.0),
                       borderSide: BorderSide(
-                        color: Color.fromRGBO(
-                            255, 159, 90, 1), // Warna border ketika fokus
-                        width: 2.0, // Lebar border ketika fokus
+                        color: Color.fromRGBO(255, 159, 90, 1),
+                        width: 2.0,
                       ),
                     ),
                   ),
-                  keyboardType: TextInputType
-                      .number, // Mengatur tipe keyboard untuk hanya angka
-                  inputFormatters: <TextInputFormatter>[
-                    FilteringTextInputFormatter.digitsOnly
-                  ],
+                  keyboardType: TextInputType.phone,
                   validator: (value) {
                     if (value!.isEmpty) {
                       return 'Phone number cannot be empty';
@@ -363,41 +314,40 @@ class _SignupPageState extends State<SignupPage> {
                     return null;
                   },
                 ),
-                SizedBox(height: 30.0),
+                SizedBox(height: 10.0),
                 ElevatedButton(
                   onPressed: () async {
-                    // Pemeriksaan apakah semua bidang telah diisi
-                    if (emailController.text.isEmpty ||
-                        passwordController.text.isEmpty ||
-                        nameController.text.isEmpty ||
-                        addressController.text.isEmpty ||
-                        phoneNumberController.text.isEmpty) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text('All fields must be filled!'),
-                          backgroundColor: Colors.red,
+                    try {
+                      UserCredential userCredential = await FirebaseAuth
+                          .instance
+                          .createUserWithEmailAndPassword(
+                        email: _emailController.text,
+                        password: _passwordController.text,
+                      );
+
+                      await FirebaseFirestore.instance
+                          .collection('users')
+                          .doc(userCredential.user?.uid)
+                          .set({
+                        // 'email': _emailController,
+                        // 'password': _passwordController,
+                        'name': _nameController.text,
+                        'address': _addressController.text,
+                        'phoneNumber': _phoneNumberController.text,
+                      });
+
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => LoginGuest(),
                         ),
                       );
-                      return; // Hentikan eksekusi lebih lanjut jika salah satu bidang kosong
-                    }
-
-                    // Coba mendaftarkan pengguna
-                    final message = await AuthService().register(
-                      email: emailController.text,
-                      password: passwordController.text,
-                      name: nameController.text,
-                      address: addressController.text,
-                      phone: phoneNumberController.text,
-                    );
-
-                    if (message == 'Registration Success') {
-                      // Jika pendaftaran berhasil, kembali ke halaman login
-                      Navigator.of(context).pop();
-                    } else {
-                      // Jika pendaftaran gagal, tampilkan pesan kesalahan
+                    } catch (e) {
+                      print('Registration failed: $e');
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: Text(message ?? 'An error occurred'),
+                          content: Text('Registration failed: $e'),
+                          backgroundColor: Colors.red,
                         ),
                       );
                     }
@@ -415,6 +365,30 @@ class _SignupPageState extends State<SignupPage> {
                       borderRadius: BorderRadius.circular(27),
                     ),
                   ),
+                ),
+                SizedBox(height: 15),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("Already have an account? "),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => LoginGuest(),
+                          ),
+                        );
+                      },
+                      child: Text(
+                        "Login",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFFFF9F5A),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
