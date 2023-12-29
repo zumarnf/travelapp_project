@@ -96,7 +96,7 @@ class _StartscreenState extends State<Startscreen> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => loginguest()),
+                                          builder: (context) => LoginGuest()),
                                     );
                                   },
                                 ),
