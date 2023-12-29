@@ -44,38 +44,37 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyA57Sw4FxIfjhyryQhKbnvyPJJyYvPvDSE',
-    appId: '1:964108833235:web:03af2832537ef1a5af9f26',
-    messagingSenderId: '964108833235',
-    projectId: 'travelapp-26466',
-    authDomain: 'travelapp-26466.firebaseapp.com',
-    storageBucket: 'travelapp-26466.appspot.com',
-    measurementId: 'G-P0BC1BQHMG',
+    apiKey: 'AIzaSyCq7xfqTrCKnwC_PCW5kqT972TUbYJHRpc',
+    appId: '1:1081899432375:web:345ffa2bac8bbcb04cd032',
+    messagingSenderId: '1081899432375',
+    projectId: 'tracelapp',
+    authDomain: 'tracelapp.firebaseapp.com',
+    storageBucket: 'tracelapp.appspot.com',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBnrqHV5ZVpAIBX3binHqcsRvG-Y0HXrJg',
-    appId: '1:964108833235:android:5f1565274c416826af9f26',
-    messagingSenderId: '964108833235',
-    projectId: 'travelapp-26466',
-    storageBucket: 'travelapp-26466.appspot.com',
+    apiKey: 'AIzaSyC3UmkN2etKz_POn40-YsV3HF60vXSymZY',
+    appId: '1:1081899432375:android:16f2bd0108f6ee524cd032',
+    messagingSenderId: '1081899432375',
+    projectId: 'tracelapp',
+    storageBucket: 'tracelapp.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyDyxgmyMQrJ_jUAz9nxuyEFJzKaolJCJuc',
-    appId: '1:964108833235:ios:62e0dae002942366af9f26',
-    messagingSenderId: '964108833235',
-    projectId: 'travelapp-26466',
-    storageBucket: 'travelapp-26466.appspot.com',
+    apiKey: 'AIzaSyCgR-vzFHLg1hhMdiskxl6Q8V2JkFIN6FE',
+    appId: '1:1081899432375:ios:fd8a3556afd916114cd032',
+    messagingSenderId: '1081899432375',
+    projectId: 'tracelapp',
+    storageBucket: 'tracelapp.appspot.com',
     iosBundleId: 'com.example.travelapp',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyDyxgmyMQrJ_jUAz9nxuyEFJzKaolJCJuc',
-    appId: '1:964108833235:ios:776904d86ceb79dcaf9f26',
-    messagingSenderId: '964108833235',
-    projectId: 'travelapp-26466',
-    storageBucket: 'travelapp-26466.appspot.com',
+    apiKey: 'AIzaSyCgR-vzFHLg1hhMdiskxl6Q8V2JkFIN6FE',
+    appId: '1:1081899432375:ios:bc90ddabbc8613a54cd032',
+    messagingSenderId: '1081899432375',
+    projectId: 'tracelapp',
+    storageBucket: 'tracelapp.appspot.com',
     iosBundleId: 'com.example.travelapp.RunnerTests',
   );
 }

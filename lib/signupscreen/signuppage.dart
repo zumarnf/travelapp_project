@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:travelapp/loginguest/loginguestpage.dart';
+
+import 'package:travelapp/auth/auth_service.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({Key? key}) : super(key: key);
@@ -317,37 +318,38 @@ class _SignupPageState extends State<SignupPage> {
                 SizedBox(height: 10.0),
                 ElevatedButton(
                   onPressed: () async {
-                    try {
-                      UserCredential userCredential = await FirebaseAuth
-                          .instance
-                          .createUserWithEmailAndPassword(
-                        email: _emailController.text,
-                        password: _passwordController.text,
-                      );
-
-                      await FirebaseFirestore.instance
-                          .collection('users')
-                          .doc(userCredential.user?.uid)
-                          .set({
-                        // 'email': _emailController,
-                        // 'password': _passwordController,
-                        'name': _nameController.text,
-                        'address': _addressController.text,
-                        'phoneNumber': _phoneNumberController.text,
-                      });
-
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => LoginGuest(),
-                        ),
-                      );
-                    } catch (e) {
-                      print('Registration failed: $e');
+                    // Pemeriksaan apakah semua bidang telah diisi
+                    if (emailController.text.isEmpty ||
+                        passwordController.text.isEmpty ||
+                        nameController.text.isEmpty ||
+                        addressController.text.isEmpty ||
+                        phoneNumberController.text.isEmpty) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: Text('Registration failed: $e'),
+                          content: Text('All fields must be filled!'),
                           backgroundColor: Colors.red,
+                        ),
+                      );
+                      return; // Hentikan eksekusi lebih lanjut jika salah satu bidang kosong
+                    }
+
+                    // Coba mendaftarkan pengguna
+                    final message = await AuthService().register(
+                      email: emailController.text,
+                      password: passwordController.text,
+                      name: nameController.text,
+                      address: addressController.text,
+                      phone: phoneNumberController.text,
+                    );
+
+                    if (message == 'Registration Success') {
+                      // Jika pendaftaran berhasil, kembali ke halaman login
+                      Navigator.of(context).pop();
+                    } else {
+                      // Jika pendaftaran gagal, tampilkan pesan kesalahan
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(message ?? 'An error occurred'),
                         ),
                       );
                     }
