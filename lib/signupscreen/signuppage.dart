@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:travelapp/loginguest/loginguestpage.dart';
+
+import 'package:travelapp/auth/auth_service.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({Key? key}) : super(key: key);
@@ -364,7 +365,8 @@ class _SignupPageState extends State<SignupPage> {
                 ),
                 SizedBox(height: 30.0),
                 ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
+                    // Pemeriksaan apakah semua bidang telah diisi
                     if (emailController.text.isEmpty ||
                         passwordController.text.isEmpty ||
                         nameController.text.isEmpty ||
@@ -376,11 +378,26 @@ class _SignupPageState extends State<SignupPage> {
                           backgroundColor: Colors.red,
                         ),
                       );
+                      return; // Hentikan eksekusi lebih lanjut jika salah satu bidang kosong
+                    }
+
+                    // Coba mendaftarkan pengguna
+                    final message = await AuthService().register(
+                      email: emailController.text,
+                      password: passwordController.text,
+                      name: nameController.text,
+                      address: addressController.text,
+                      phone: phoneNumberController.text,
+                    );
+
+                    if (message == 'Registration Success') {
+                      // Jika pendaftaran berhasil, kembali ke halaman login
+                      Navigator.of(context).pop();
                     } else {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => loginguest(),
+                      // Jika pendaftaran gagal, tampilkan pesan kesalahan
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(message ?? 'An error occurred'),
                         ),
                       );
                     }
