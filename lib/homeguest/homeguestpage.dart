@@ -5,25 +5,62 @@ import 'package:travelapp/homeguest/widgets/location_card.dart';
 import 'package:travelapp/homeguest/widgets/nearby_places.dart';
 import 'package:travelapp/homeguest/widgets/reccomended_places.dart';
 import 'package:travelapp/homeguest/widgets/tourist_places.dart';
+
+// import 'package:flutter/material.dart';
+// import 'package:ionicons/ionicons.dart';
 import 'package:travelapp/locationscreen/locationpage.dart';
 import 'package:travelapp/navbar/custnavbar.dart';
-// import 'package:travelapp/locationscreen/locationpage.dart';
-// import 'package:travelapp/navbar/custnavbar.dart';
+import 'package:travelapp/profile/profilepage.dart';
+// import 'animated_bottom_bar.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
+
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  int _bottomNavIndex = 0;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.location_on_outlined),
-          onPressed: () {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => locationpg()));
-          }),
+        child: Icon(Icons.location_on_outlined),
+        onPressed: () {
+          // Assuming locationpg is defined somewhere
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => locationpg()),
+          );
+        },
+      ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      bottomNavigationBar: buildAnimatedBottomBar(),
+      bottomNavigationBar: buildAnimatedBottomBar(_bottomNavIndex, (index) {
+        setState(() {
+          _bottomNavIndex = index;
+        });
+
+        // Handle navigation based on the selected index
+        switch (index) {
+          case 0:
+            // Navigate to the home page
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => HomePage()),
+            );
+            break;
+          case 1:
+            // Navigate to the profile page
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ProfileScreen()),
+            );
+            break;
+          // Add more cases for additional tabs if needed
+        }
+      }),
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
@@ -39,9 +76,6 @@ class HomePage extends StatelessWidget {
           ],
         ),
         actions: const [
-          // CustomIconButton(
-          //   icon: Icon(Ionicons.search_outline),
-          // ),
           Padding(
             padding: EdgeInsets.only(left: 8.0, right: 12),
             child: CustomIconButton(
@@ -93,30 +127,6 @@ class HomePage extends StatelessWidget {
           const SizedBox(height: 10),
         ],
       ),
-      // bottomNavigationBar: AnimatedBottomBar(),
-      // bottomNavigationBar: BottomNavigationBar(
-      //   type: BottomNavigationBarType.fixed,
-      //   showSelectedLabels: false,
-      //   showUnselectedLabels: false,
-      //   items: const [
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Ionicons.home_outline),
-      //       label: "Home",
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Ionicons.bookmark_outline),
-      //       label: "Bookmark",
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Ionicons.ticket_outline),
-      //       label: "Ticket",
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Ionicons.person_outline),
-      //       label: "Profile",
-      //     )
-      //   ],
-      // ),
     );
   }
 }

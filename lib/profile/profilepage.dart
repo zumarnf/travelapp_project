@@ -1,9 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:travelapp/homeguest/homeguestpage.dart';
 import 'package:travelapp/homeguest/widgets/reccomended_places.dart';
+import 'package:travelapp/locationscreen/locationpage.dart';
 import 'package:travelapp/loginguest/loginguestpage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:travelapp/navbar/custnavbar.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -13,6 +16,8 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  int _bottomNavIndex = 0;
+
   String nama = '';
   String alamat = '';
   String nomor = '';
@@ -54,6 +59,41 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.location_on_outlined),
+        onPressed: () {
+          // Assuming locationpg is defined somewhere
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => locationpg()),
+          );
+        },
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      bottomNavigationBar: buildAnimatedBottomBar(_bottomNavIndex, (index) {
+        setState(() {
+          _bottomNavIndex = index;
+        });
+
+        // Handle navigation based on the selected index
+        switch (index) {
+          case 0:
+            // Navigate to the home page
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => HomePage()),
+            );
+            break;
+          case 1:
+            // Navigate to the profile page
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ProfileScreen()),
+            );
+            break;
+          // Add more cases for additional tabs if needed
+        }
+      }),
       body: Padding(
         padding:
             const EdgeInsets.only(top: 50.0, left: 8, right: 8, bottom: 25),
@@ -165,7 +205,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
             // Memastikan ada sedikit ruang sebelum tombol
 
 // Spacer untuk menempatkan tombol di tengah vertikal
-            Spacer(),
+            // Spacer(),
+            SizedBox(
+              height: 40,
+            ),
             Center(
               // Menempatkan tombol di tengah vertikal
               child: ElevatedButton(
