@@ -1,26 +1,21 @@
-import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
+// animated_bottom_bar.dart
+
 import 'package:flutter/material.dart';
+import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 
-// main app that calls the runApp.
-
-Widget buildAnimatedBottomBar() {
-  // list of icons that required by animated navigation bar
+Widget buildAnimatedBottomBar(int currentIndex, Function(int) onTap) {
   List<IconData> iconList = [
     Icons.home_outlined,
-    Icons.person_2_outlined,
+    Icons.person_outline,
   ];
 
-  // default index of the tabs
-  int _bottomNavIndex = 0;
-
   return AnimatedBottomNavigationBar(
-    // navigation bar
     icons: iconList,
-    activeIndex: _bottomNavIndex,
+    activeIndex: currentIndex,
     gapLocation: GapLocation.center,
-    notchMargin: 8, // Default notch margin is 8
+    notchMargin: 8,
     notchSmoothness: NotchSmoothness.verySmoothEdge,
-    onTap: (index) => _bottomNavIndex = index,
+    onTap: onTap,
     backgroundColor: const Color.fromRGBO(255, 159, 95, 1),
   );
 }
