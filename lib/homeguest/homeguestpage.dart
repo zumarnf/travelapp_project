@@ -5,6 +5,9 @@ import 'package:travelapp/homeguest/widgets/location_card.dart';
 import 'package:travelapp/homeguest/widgets/nearby_places.dart';
 import 'package:travelapp/homeguest/widgets/reccomended_places.dart';
 import 'package:travelapp/homeguest/widgets/tourist_places.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 // import 'package:flutter/material.dart';
 // import 'package:ionicons/ionicons.dart';
@@ -22,6 +25,43 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _bottomNavIndex = 0;
+  String nama = '';
+  String alamat = '';
+  String nomor = '';
+  String aidi = '';
+  @override
+  void initState() {
+    super.initState();
+    getUserUID();
+    getUserName();
+  }
+
+  void getUserUID() {
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    final User? user = auth.currentUser;
+    final uid = user!.uid;
+    setState(() {
+      aidi = uid;
+    });
+    print(aidi);
+  }
+
+  void getUserName() {
+    final docRef = FirebaseFirestore.instance.collection('users').doc(aidi);
+
+    docRef.get().then(
+      (DocumentSnapshot doc) {
+        final data = doc.data() as Map<String, dynamic>;
+        setState(() {
+          nama = data['name'];
+          alamat = data['address'];
+          nomor = data['phoneNumber'];
+        });
+        // print(data['name']);
+      },
+      onError: (e) => print("Error getting document: $e"),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,10 +108,14 @@ class _HomePageState extends State<HomePage> {
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text("Hey User"),
             Text(
-              "Wonokromo, Surabaya",
-              style: Theme.of(context).textTheme.labelMedium,
+              "Hello $nama",
+              style: GoogleFonts.poppins(
+                  fontSize: 25, fontWeight: FontWeight.w700),
+            ),
+            Text(
+              alamat,
+              style: Theme.of(context).textTheme.labelLarge,
             ),
           ],
         ),

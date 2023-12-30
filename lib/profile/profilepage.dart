@@ -119,7 +119,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   crossAxisAlignment: CrossAxisAlignment
                       .start, // Untuk sejajar dengan teks "Halo Zumar"
                   children: [
-                    Text("Hello $nama"),
+                    Text(
+                      "Hello $nama",
+                      style: GoogleFonts.poppins(
+                          fontSize: 30, fontWeight: FontWeight.bold),
+                    ),
                     Text(
                       'Welcome back to your profile',
                       style: GoogleFonts.poppins(
@@ -139,7 +143,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         children: [
                           Text(
                             'Address', // Teks kecil pertama
-                            style: TextStyle(fontSize: 12, color: Colors.grey),
+                            style: GoogleFonts.poppins(
+                                fontSize: 15, fontWeight: FontWeight.w400),
                           ),
                           SizedBox(height: 10),
                           Container(
@@ -154,7 +159,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             child: Center(
                               child: Text(
                                 alamat,
-                                style: TextStyle(fontSize: 18),
+                                style: GoogleFonts.poppins(
+                                    fontSize: 18, fontWeight: FontWeight.w600),
                               ),
                             ),
                           ),
@@ -166,7 +172,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         children: [
                           Text(
                             'Phone Number', // Teks kecil kedua
-                            style: TextStyle(fontSize: 12, color: Colors.grey),
+                            style: GoogleFonts.poppins(
+                                fontSize: 15, fontWeight: FontWeight.w400),
                           ),
                           SizedBox(height: 10),
                           Container(
@@ -179,7 +186,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             child: Center(
                               child: Text(
                                 nomor,
-                                style: TextStyle(fontSize: 16),
+                                style: GoogleFonts.poppins(
+                                    fontSize: 18, fontWeight: FontWeight.w600),
                               ),
                             ),
                           ),
