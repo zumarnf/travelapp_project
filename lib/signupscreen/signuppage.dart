@@ -329,8 +329,8 @@ class _SignupPageState extends State<SignupPage> {
                           .collection('users')
                           .doc(userCredential.user?.uid)
                           .set({
-                        // 'email': _emailController,
-                        // 'password': _passwordController,
+                        'email': _emailController.text,
+                        'password': _passwordController.text,
                         'name': _nameController.text,
                         'address': _addressController.text,
                         'phoneNumber': _phoneNumberController.text,

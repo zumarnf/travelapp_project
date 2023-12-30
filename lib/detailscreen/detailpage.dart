@@ -37,7 +37,7 @@ class _TouristDetailsPageState extends State<TouristDetailsPage> {
           padding: const EdgeInsets.all(10),
           children: [
             SizedBox(
-              height: size.height * .6,
+              height: size.height * .56,
               width: 100,
               child: Stack(
                 fit: StackFit.expand,
@@ -95,7 +95,7 @@ class _TouristDetailsPageState extends State<TouristDetailsPage> {
             Padding(
               padding: const EdgeInsets.only(left: 20.0),
               child: Text(
-                "Sea of Peace",
+                "Pantai Lepas",
                 style: Theme.of(context).textTheme.titleLarge,
               ),
             ),
@@ -125,8 +125,8 @@ class _TouristDetailsPageState extends State<TouristDetailsPage> {
                     },
                     child: Container(
                       margin: EdgeInsets.all(8),
-                      width: 50,
-                      height: 50,
+                      width: 100,
+                      height: 250,
                       decoration: BoxDecoration(
                         border: Border.all(
                           color: _currentIndex == index
@@ -148,8 +148,9 @@ class _TouristDetailsPageState extends State<TouristDetailsPage> {
             const SizedBox(height: 15),
             // Short description
             Text(
-              "This is a short description of the place. It can include information about the history, features, and other interesting details.",
+              "Pantai adalah suatu area peralihan antara daratan dan laut yang ditandai oleh kehadiran pasir, kerikil, atau batu-batu kecil yang membentang sepanjang garis pantai. Keunikan pantai terletak pada interaksi dinamis antara unsur-unsur alam seperti ombak, pasang surut, dan angin yang membentuk serta mengubah tata letak dan karakteristiknya. Pantai sering kali menjadi destinasi wisata populer karena keindahan alamnya yang menakjubkan, menyajikan pemandangan matahari terbenam yang memukau dan menyediakan berbagai kegiatan rekreasi seperti berenang, selancar, atau sekadar bersantai. Selain itu, pantai juga memiliki ekosistem laut yang kaya biodiversitas, menawarkan habitat bagi berbagai spesies tanaman dan hewan laut yang penting bagi keseimbangan ekologi laut.",
               style: Theme.of(context).textTheme.bodySmall,
+              textAlign: TextAlign.justify,
             ),
             const SizedBox(height: 20),
             // "Go" button
@@ -161,10 +162,10 @@ class _TouristDetailsPageState extends State<TouristDetailsPage> {
               style: ElevatedButton.styleFrom(
                 elevation: 0,
                 shape: const StadiumBorder(),
-                padding: const EdgeInsets.symmetric(
-                  vertical: 15,
-                  horizontal: 8.0,
-                ),
+                padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+                backgroundColor: Color.fromRGBO(240, 240, 240, 1),
+                foregroundColor: const Color.fromRGBO(255, 159, 90, 1),
+                minimumSize: Size(320, 50),
               ),
               child: const Text("Go"),
             ),
