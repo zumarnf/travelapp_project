@@ -1,6 +1,10 @@
 import 'dart:convert';
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:travelapp/homeadmin/homeadminpage.dart';
 
 class DestinationForm extends StatefulWidget {
   @override
@@ -9,10 +13,14 @@ class DestinationForm extends StatefulWidget {
 
 class _DestinationFormState extends State<DestinationForm> {
   final _formKey = GlobalKey<FormState>();
-  String _pictureUrl = ''; // This will store the path string
+  String _pictureUrl = '';
   String _destinationName = '';
   String _location = '';
   String _description = '';
+
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final firebase_storage.FirebaseStorage _storage =
+      firebase_storage.FirebaseStorage.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -34,16 +42,18 @@ class _DestinationFormState extends State<DestinationForm> {
 
                   if (pickedFile != null) {
                     final bytes = await pickedFile.readAsBytes();
+                    // Upload the image to Firebase Storage
+                    final imageUrl = await _uploadImageToStorage(bytes);
                     setState(() {
-                      _pictureUrl = base64Encode(bytes);
+                      _pictureUrl = imageUrl;
                     });
                   }
                 },
                 child: Text('Upload Image'),
               ),
               _pictureUrl.isNotEmpty
-                  ? Image.memory(
-                      base64Decode(_pictureUrl), // Decode base64 to bytes
+                  ? Image.network(
+                      _pictureUrl,
                       height: 200,
                       width: 200,
                     )
@@ -102,15 +112,64 @@ class _DestinationFormState extends State<DestinationForm> {
     );
   }
 
+  Future<String> _uploadImageToStorage(List<int> bytes) async {
+    try {
+      final timestamp = DateTime.now().millisecondsSinceEpoch;
+      final imagePath = 'images/$timestamp.jpg';
+      final storageReference = _storage.ref().child(imagePath);
+      final uploadTask = storageReference.putData(Uint8List.fromList(bytes));
+
+      // Wait for the upload to complete
+      await uploadTask.whenComplete(() {});
+
+      // Get the download URL from the storage reference
+      final imageUrl = await storageReference.getDownloadURL();
+
+      return imageUrl;
+    } catch (error) {
+      print('Error uploading image to Firebase Storage: $error');
+      // Handle error as needed
+      return '';
+    }
+  }
+
   void _submitForm() {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
 
-      // Perform actions with the form data
-      print('Picture URL: $_pictureUrl');
-      print('Destination Name: $_destinationName');
-      print('Location: $_location');
-      print('Description: $_description');
+      // Save data to Firestore
+      _saveDataToFirestore();
+    }
+  }
+
+  void _saveDataToFirestore() async {
+    try {
+      await _firestore.collection('admin').add({
+        'pictureUrl': _pictureUrl,
+        'destinationName': _destinationName,
+        'location': _location,
+        'description': _description,
+      });
+
+      // Data successfully saved to Firestore
+      print('Data saved to Firestore!');
+
+      // Show a success notification
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Data saved successfully!'),
+          duration: Duration(seconds: 2), // Adjust the duration as needed
+        ),
+      );
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => HomeAdmin(),
+        ),
+      );
+    } catch (error) {
+      // Handle errors
+      print('Error saving data to Firestore: $error');
     }
   }
 }
