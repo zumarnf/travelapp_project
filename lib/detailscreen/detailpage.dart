@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class TouristDetailsPage extends StatefulWidget {
   const TouristDetailsPage({
@@ -103,9 +104,9 @@ class _TouristDetailsPageState extends State<TouristDetailsPage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                _buildDetailColumn("Location", Icons.location_on),
-                _buildDetailColumn("Rating", Icons.star),
-                _buildDetailColumn("Distance", Icons.directions),
+                _buildDetailColumn("Surabaya", Icons.location_on),
+                _buildDetailColumn("4.5", Icons.star),
+                _buildDetailColumn("40 Km", Icons.directions),
               ],
             ),
             const SizedBox(height: 15),
@@ -153,7 +154,10 @@ class _TouristDetailsPageState extends State<TouristDetailsPage> {
             const SizedBox(height: 20),
             // "Go" button
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                // Replace the coordinates with the desired latitude and longitude
+                launchMap(37.7749, -122.4194);
+              },
               style: ElevatedButton.styleFrom(
                 elevation: 0,
                 shape: const StadiumBorder(),
@@ -168,6 +172,18 @@ class _TouristDetailsPageState extends State<TouristDetailsPage> {
         ),
       ),
     );
+  }
+
+  void launchMap(double latitude, double longitude) async {
+    final url =
+        'https://www.google.com/maps/place/Pantai+Malang/@-7.8612585,109.9303267,17z/data=!3m1!4b1!4m6!3m5!1s0x2e7add4079dbbe3d:0x2127e9cf9f3c323e!8m2!3d-7.8612585!4d109.932907!16s%2Fg%2F11j_7lwys1?entry=ttu';
+
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      // Handle the case where the user cannot launch the map.
+      print('Could not launch $url');
+    }
   }
 
   // Helper method to build columns for location, rating, and distance details
