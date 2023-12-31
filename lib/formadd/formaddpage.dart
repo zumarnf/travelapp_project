@@ -12,6 +12,12 @@ class DestinationForm extends StatefulWidget {
 }
 
 class _DestinationFormState extends State<DestinationForm> {
+  void setPictureUrl(String url) {
+    setState(() {
+      _pictureUrl = url;
+    });
+  }
+
   final _formKey = GlobalKey<FormState>();
   String _pictureUrl = '';
   String _destinationName = '';
@@ -56,6 +62,7 @@ class _DestinationFormState extends State<DestinationForm> {
                       _pictureUrl,
                       height: 200,
                       width: 200,
+                      fit: BoxFit.cover,
                     )
                   : Text('No image selected.'),
               SizedBox(height: 16),
