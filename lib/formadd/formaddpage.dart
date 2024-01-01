@@ -5,6 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:travelapp/homeadmin/homeadminpage.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class DestinationForm extends StatefulWidget {
   @override
@@ -23,6 +24,7 @@ class _DestinationFormState extends State<DestinationForm> {
   String _destinationName = '';
   String _location = '';
   String _description = '';
+  double _rating = 0; // New variable for rating
 
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final firebase_storage.FirebaseStorage _storage =
@@ -105,6 +107,23 @@ class _DestinationFormState extends State<DestinationForm> {
                 },
                 maxLines: 3,
               ),
+              RatingBar.builder(
+                initialRating: _rating,
+                minRating: 1,
+                direction: Axis.horizontal,
+                allowHalfRating: false,
+                itemCount: 5,
+                itemSize: 30,
+                itemBuilder: (context, _) => const Icon(
+                  Icons.star,
+                  color: Colors.amber,
+                ),
+                onRatingUpdate: (rating) {
+                  setState(() {
+                    _rating = rating;
+                  });
+                },
+              ),
               SizedBox(height: 16),
               ElevatedButton(
                 onPressed: () {
@@ -156,6 +175,7 @@ class _DestinationFormState extends State<DestinationForm> {
         'destinationName': _destinationName,
         'location': _location,
         'description': _description,
+        'rating': _rating, // Add rating field
       });
 
       // Data successfully saved to Firestore
