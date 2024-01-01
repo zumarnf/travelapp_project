@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:travelapp/homeguest/widgets/location_card.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart'; // Import Firebase Authentication
 
 class locationpg extends StatefulWidget {
   @override
@@ -12,19 +14,56 @@ class _locationpgState extends State<locationpg> {
   bool isLoading = false;
   double? latitude;
   double? longitude;
+  String aidi = '';
 
   @override
   void initState() {
     super.initState();
-    checkLocationPermission();
+    getUserUID();
   }
 
-  Future<void> checkLocationPermission() async {
-    LocationPermission permission;
-    permission = await Geolocator.requestPermission();
-    Position position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
-    print(position);
+  void getUserUID() {
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    final User? user = auth.currentUser;
+    if (user != null) {
+      setState(() {
+        aidi = user.uid;
+      });
+      print(
+          "UID pengguna: $aidi"); // Cetak UID untuk memastikan Anda mendapatkannya
+    } else {
+      print("User belum masuk"); // Cetak jika user belum masuk
+    }
+  }
+
+  Future<void> saveLocationToFirestore(
+      double latitude, double longitude) async {
+    try {
+      final FirebaseFirestore firestore = FirebaseFirestore.instance;
+      final CollectionReference users = firestore.collection('users');
+
+      // Menambahkan field 'uid' ke dokumen yang ada atau membuat dokumen baru jika belum ada
+      await users.doc(aidi).set(
+          {
+            'latitude': latitude,
+            'longitude': longitude,
+          },
+          SetOptions(
+              merge:
+                  true)); // Gunakan SetOptions untuk menggabungkan data dengan dokumen yang sudah ada
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Lokasi berhasil disimpan!"),
+        ),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Terjadi kesalahan saat menyimpan lokasi: $e"),
+        ),
+      );
+    }
   }
 
   Future<void> getLocation() async {
@@ -43,14 +82,16 @@ class _locationpgState extends State<locationpg> {
         longitude = position.longitude;
       });
 
-      // Show location in the LocationCard
+      print(
+          "Menyimpan lokasi dengan UID: $aidi"); // Cetak UID sebelum menyimpan lokasi
+      await saveLocationToFirestore(position.latitude, position.longitude);
+
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text("Location: $latitude, $longitude"),
         ),
       );
 
-      // Navigate back to the home page
       Navigator.pop(context);
     } catch (e) {
       setState(() {
