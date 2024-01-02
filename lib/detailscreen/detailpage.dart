@@ -49,6 +49,9 @@ class _TouristDetailsPageState extends State<TouristDetailsPage> {
 
         if (snapshot.exists) {
           print('Document ID: ${snapshot.id}'); // Print the document ID
+          print(
+              'Document data: ${snapshot.data()}'); // Print the entire document data
+
           setState(() {
             destinationData = snapshot.data();
           });
@@ -82,13 +85,17 @@ class _TouristDetailsPageState extends State<TouristDetailsPage> {
                       borderRadius: const BorderRadius.vertical(
                           bottom: Radius.circular(20)),
                       // Replace the AssetImage with NetworkImage
-                      image: DecorationImage(
-                        image: NetworkImage(
-                          'https://firebasestorage.googleapis.com/v0/b/travelapp-26466.appspot.com/o/images%2F1704186869174.jpg?alt=media&token=9f1beca8-3c08-4ae3-840d-9a993300a37b',
-                        ),
-                        fit: BoxFit.cover,
-                      ),
-
+                      image: destinationData != null
+                          ? DecorationImage(
+                              image: NetworkImage(
+                                destinationData?['image'] ?? '',
+                              ),
+                              fit: BoxFit.cover,
+                            )
+                          : const DecorationImage(
+                              image: AssetImage('assets/img/gambar1.jpg'),
+                              fit: BoxFit.cover,
+                            ),
                       boxShadow: [
                         BoxShadow(
                           color: Colors.transparent,

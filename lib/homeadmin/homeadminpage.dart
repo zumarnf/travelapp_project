@@ -62,8 +62,8 @@ class HomeAdmin extends StatelessWidget {
                 const SizedBox(height: 10),
                 const RecommendedAdminPlaces(),
                 const SizedBox(height: 15),
-                const RecommendedPlaces(),
-                const SizedBox(height: 15),
+                // const RecommendedAdminPlaces(),
+                // const SizedBox(height: 15),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
