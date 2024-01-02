@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:travelapp/auth/auth_gate.dart';
 import 'package:travelapp/formadd/formaddpage.dart';
+import 'package:travelapp/homeadmin/Recommended_admin_places.dart';
 import 'package:travelapp/homeguest/widgets/cusom_icon_button.dart';
-// import 'package:travelapp/homeguest/widgets/location_card.dart';
 import 'package:travelapp/homeguest/widgets/nearby_places.dart';
 import 'package:travelapp/homeguest/widgets/reccomended_places.dart';
-// import 'package:travelapp/homeguest/widgets/tourist_places.dart';
-// import 'package:travelapp/navbar/custnavbar.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class HomeAdmin extends StatelessWidget {
   const HomeAdmin({Key? key}) : super(key: key);
@@ -24,14 +25,13 @@ class HomeAdmin extends StatelessWidget {
             const Text("Hey Admin"),
             Text(
               "Wonokromo, Surabaya",
-              style: Theme.of(context).textTheme.labelMedium,
+              style: GoogleFonts.poppins(
+                textStyle: Theme.of(context).textTheme.headline6,
+              ),
             ),
           ],
         ),
         actions: const [
-          // CustomIconButton(
-          //   icon: Icon(Ionicons.search_outline),
-          // ),
           Padding(
             padding: EdgeInsets.only(left: 8.0, right: 12),
             child: CustomIconButton(
@@ -40,86 +40,83 @@ class HomeAdmin extends StatelessWidget {
           ),
         ],
       ),
-      body: ListView(
-        physics: const BouncingScrollPhysics(),
-        padding: const EdgeInsets.all(14),
+      body: Column(
         children: [
-          // LOCATION CARD
-          // const LocationCard(),
-          // const SizedBox(
-          //   height: 15,
-          // ),
-          // const TouristPlaces(),
-          // CATEGORIES
-          const SizedBox(height: 10),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                "Popular Places Near You!",
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
-              // TextButton(onPressed: () {}, child: const Text("View All"))
-            ],
+          Expanded(
+            child: ListView(
+              physics: const BouncingScrollPhysics(),
+              padding: const EdgeInsets.all(14),
+              children: [
+                const SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Popular Places Near You!",
+                      style: GoogleFonts.poppins(
+                        textStyle: Theme.of(context).textTheme.headline5,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                const RecommendedAdminPlaces(),
+                const SizedBox(height: 15),
+                const RecommendedPlaces(),
+                const SizedBox(height: 15),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Most Visited Places Near You",
+                      style: GoogleFonts.poppins(
+                        textStyle: Theme.of(context).textTheme.headline5,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                const NearbyPlaces(),
+                const SizedBox(height: 10),
+              ],
+            ),
           ),
-          const SizedBox(height: 10),
-
-          const RecommendedPlaces(),
-          const SizedBox(height: 15),
-          const RecommendedPlaces(),
-          const SizedBox(height: 15),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                "Most Visited Places Near You",
-                style: Theme.of(context).textTheme.titleLarge,
+          ElevatedButton(
+            onPressed: () async {
+              await FirebaseAuth.instance.signOut();
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => AuthGate()),
+              );
+            },
+            child: Text(
+              'Log Out',
+              style: GoogleFonts.poppins(fontSize: 18),
+            ),
+            style: ElevatedButton.styleFrom(
+              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+              backgroundColor: Color.fromRGBO(240, 240, 240, 1),
+              foregroundColor: const Color.fromRGBO(255, 159, 90, 1),
+              minimumSize: Size(320, 50),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(27),
               ),
-              // TextButton(onPressed: () {}, child: const Text("View All"))
-            ],
+            ),
           ),
-          const SizedBox(height: 10),
-          const NearbyPlaces(),
-          const SizedBox(height: 10),
         ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // Add your logic for the floating action button here
           Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => DestinationForm(),
-              ));
+            context,
+            MaterialPageRoute(
+              builder: (context) => DestinationForm(),
+            ),
+          );
         },
         child: Icon(Icons.add),
       ),
-      // Optional: Set the floating action button's position
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      // bottomNavigationBar: AnimatedBottomBar(),
-      // bottomNavigationBar: BottomNavigationBar(
-      //   type: BottomNavigationBarType.fixed,
-      //   showSelectedLabels: false,
-      //   showUnselectedLabels: false,
-      //   items: const [
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Ionicons.home_outline),
-      //       label: "Home",
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Ionicons.bookmark_outline),
-      //       label: "Bookmark",
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Ionicons.ticket_outline),
-      //       label: "Ticket",
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Ionicons.person_outline),
-      //       label: "Profile",
-      //     )
-      //   ],
-      // ),
     );
   }
 }

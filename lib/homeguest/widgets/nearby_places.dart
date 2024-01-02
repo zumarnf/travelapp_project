@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:travelapp/detailscreen/detailnormal.dart';
 import 'package:travelapp/detailscreen/detailpage.dart';
 // import 'package:travel_app/models/nearby_places_model.dart';
 // import 'package:travel_app/pages/tourist_details_page.dart';
@@ -29,7 +30,7 @@ class NearbyPlaces extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => TouristDetailsPage(
+                        builder: (context) => TouristDetails(
                           image: nearbyPlaces[index].image,
                         ),
                       ));

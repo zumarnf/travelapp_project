@@ -1,24 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
-class TouristDetailsPage extends StatefulWidget {
-  const TouristDetailsPage({
+class TouristDetails extends StatefulWidget {
+  const TouristDetails({
     Key? key,
     required this.image,
-    required this.documentId, // Add the documentId parameter
   }) : super(key: key);
 
   final String image;
-  final String documentId; // Add the documentId field
 
   @override
   _TouristDetailsPageState createState() => _TouristDetailsPageState();
 }
 
-class _TouristDetailsPageState extends State<TouristDetailsPage> {
-  Map<String, dynamic>? destinationData; // Initialize with an empty map
+class _TouristDetailsPageState extends State<TouristDetails> {
   List<String> imageList = [
     'assets/img/place1.jpg',
     'assets/img/place2.jpg',
@@ -31,37 +27,6 @@ class _TouristDetailsPageState extends State<TouristDetailsPage> {
   ];
 
   int _currentIndex = 0;
-
-  @override
-  void initState() {
-    super.initState();
-    fetchData();
-  }
-
-  Future<void> fetchData() async {
-    try {
-      if (widget.documentId.isNotEmpty) {
-        DocumentSnapshot<Map<String, dynamic>> snapshot =
-            await FirebaseFirestore.instance
-                .collection('admin')
-                .doc(widget.documentId)
-                .get();
-
-        if (snapshot.exists) {
-          print('Document ID: ${snapshot.id}'); // Print the document ID
-          setState(() {
-            destinationData = snapshot.data();
-          });
-        } else {
-          print('Document does not exist');
-        }
-      } else {
-        print('Invalid document ID');
-      }
-    } catch (error) {
-      print('Error fetching data: $error');
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -81,17 +46,16 @@ class _TouristDetailsPageState extends State<TouristDetailsPage> {
                     decoration: BoxDecoration(
                       borderRadius: const BorderRadius.vertical(
                           bottom: Radius.circular(20)),
-                      // Replace the AssetImage with NetworkImage
                       image: DecorationImage(
-                        image: NetworkImage(
-                          'https://firebasestorage.googleapis.com/v0/b/travelapp-26466.appspot.com/o/images%2F1704186869174.jpg?alt=media&token=9f1beca8-3c08-4ae3-840d-9a993300a37b',
-                        ),
+                        image: AssetImage(widget.image),
                         fit: BoxFit.cover,
                       ),
-
                       boxShadow: [
                         BoxShadow(
                           color: Colors.transparent,
+                          // spreadRadius: 0,
+                          // blurRadius: 20,
+                          // offset: const Offset(0, 10),
                         ),
                       ],
                     ),
@@ -122,7 +86,7 @@ class _TouristDetailsPageState extends State<TouristDetailsPage> {
                         ],
                       ),
                     ),
-                  ),
+                  )
                 ],
               ),
             ),
@@ -131,8 +95,7 @@ class _TouristDetailsPageState extends State<TouristDetailsPage> {
             Padding(
               padding: const EdgeInsets.only(left: 20.0),
               child: Text(
-                destinationData?['destinationName'] ??
-                    'Loading...', // Handle null case
+                "Pantai Lepas",
                 style: Theme.of(context).textTheme.titleLarge,
               ),
             ),
@@ -141,15 +104,11 @@ class _TouristDetailsPageState extends State<TouristDetailsPage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                _buildDetailColumn(
-                    destinationData?['location'] ?? '', Icons.location_on),
-                _buildDetailColumn(
-                    destinationData?['rating']?.toString() ?? '', Icons.star),
-                // Add more details if needed
+                _buildDetailColumn("Surabaya", Icons.location_on),
+                _buildDetailColumn("4.5", Icons.star),
                 _buildDetailColumn("40 Km", Icons.directions),
               ],
             ),
-
             const SizedBox(height: 15),
             // Small image previews in a horizontal ListView
             Container(
@@ -189,8 +148,7 @@ class _TouristDetailsPageState extends State<TouristDetailsPage> {
             const SizedBox(height: 15),
             // Short description
             Text(
-              destinationData?['description'] ??
-                  'Loading...', // Handle null case
+              "Pantai adalah suatu area peralihan antara daratan dan laut yang ditandai oleh kehadiran pasir, kerikil, atau batu-batu kecil yang membentang sepanjang garis pantai. Keunikan pantai terletak pada interaksi dinamis antara unsur-unsur alam seperti ombak, pasang surut, dan angin yang membentuk serta mengubah tata letak dan karakteristiknya. Pantai sering kali menjadi destinasi wisata populer karena keindahan alamnya yang menakjubkan, menyajikan pemandangan matahari terbenam yang memukau dan menyediakan berbagai kegiatan rekreasi seperti berenang, selancar, atau sekadar bersantai. Selain itu, pantai juga memiliki ekosistem laut yang kaya biodiversitas, menawarkan habitat bagi berbagai spesies tanaman dan hewan laut yang penting bagi keseimbangan ekologi laut.",
               style: Theme.of(context).textTheme.bodySmall,
               textAlign: TextAlign.justify,
             ),
@@ -229,7 +187,7 @@ class _TouristDetailsPageState extends State<TouristDetailsPage> {
     }
   }
 
-// Helper method to build columns for location, rating, and distance details
+  // Helper method to build columns for location, rating, and distance details
   Widget _buildDetailColumn(String label, IconData icon) {
     return Column(
       mainAxisSize: MainAxisSize.min,

@@ -44,6 +44,8 @@ class RecommendedPlaces extends StatelessWidget {
                           MaterialPageRoute(
                             builder: (context) => TouristDetailsPage(
                               image: recommendedPlaces[index]['image'],
+                              documentId: recommendedPlaces[index]
+                                  ['documentId'], // Use the document ID
                             ),
                           ),
                         );
@@ -134,10 +136,12 @@ class RecommendedPlaces extends StatelessWidget {
 
         // You may need to add more fields based on your Firestore structure
         recommendedPlaces.add({
+          'documentId': documentSnapshot.id, // Add document ID to the map
           'image': data['pictureUrl'],
           'destinationName': data['destinationName'],
           'location': data['location'],
           'rating': data['rating'],
+          'description': data['description'],
         });
       }
 
