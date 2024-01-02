@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:travelapp/detailscreen/detailpage.dart';
-import 'package:cloud_firestore/cloud_firestore.dart'; // Import Firestore
-import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-class RecommendedAdminPlaces extends StatelessWidget {
+class RecommendedAdminPlaces extends StatefulWidget {
   const RecommendedAdminPlaces({Key? key}) : super(key: key);
 
+  @override
+  _RecommendedAdminPlacesState createState() => _RecommendedAdminPlacesState();
+}
+
+class _RecommendedAdminPlacesState extends State<RecommendedAdminPlaces> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -20,27 +24,17 @@ class RecommendedAdminPlaces extends StatelessWidget {
           List<Map<String, dynamic>> recommendedPlaces =
               snapshot.data as List<Map<String, dynamic>>;
 
-          return SizedBox(
-            height: 275, // Increased height
-            child: ListView.separated(
-              physics: const BouncingScrollPhysics(),
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) {
-                return Dismissible(
-                  key: Key(recommendedPlaces[index]['documentId']),
-                  onDismissed: (direction) {
-                    _deletePlace(context, recommendedPlaces[index]);
-                  },
-                  background: Container(
-                    color: Colors.red,
-                    alignment: Alignment.centerRight,
-                    padding: const EdgeInsets.only(right: 10),
-                    child: const Icon(
-                      Icons.delete,
-                      color: Colors.black,
-                    ),
-                  ),
-                  child: SizedBox(
+          return RefreshIndicator(
+            onRefresh: () async {
+              setState(() {}); // Reload the data
+            },
+            child: SizedBox(
+              height: 275,
+              child: ListView.separated(
+                physics: const BouncingScrollPhysics(),
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (context, index) {
+                  return SizedBox(
                     width: 220,
                     child: Card(
                       elevation: 0.4,
@@ -118,18 +112,37 @@ class RecommendedAdminPlaces extends StatelessWidget {
                                   )
                                 ],
                               ),
+                              const SizedBox(height: 10),
+                              ElevatedButton(
+                                onPressed: () {
+                                  _showDeleteConfirmationDialog(
+                                      context, recommendedPlaces[index]);
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  elevation: 0,
+                                  shape: const StadiumBorder(),
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 15, vertical: 10),
+                                  backgroundColor:
+                                      Color.fromRGBO(240, 240, 240, 1),
+                                  foregroundColor:
+                                      const Color.fromRGBO(255, 159, 90, 1),
+                                  minimumSize: Size(200, 40),
+                                ),
+                                child: const Text("Delete"),
+                              ),
                             ],
                           ),
                         ),
                       ),
                     ),
-                  ),
-                );
-              },
-              separatorBuilder: (context, index) => const Padding(
-                padding: EdgeInsets.only(right: 10),
+                  );
+                },
+                separatorBuilder: (context, index) => const Padding(
+                  padding: EdgeInsets.only(right: 10),
+                ),
+                itemCount: recommendedPlaces.length,
               ),
-              itemCount: recommendedPlaces.length,
             ),
           );
         }
@@ -137,9 +150,9 @@ class RecommendedAdminPlaces extends StatelessWidget {
     );
   }
 
-  Future<void> _deletePlace(
-      BuildContext context, Map<String, dynamic> place) async {
-    bool confirmDelete = await showDialog(
+  void _showDeleteConfirmationDialog(
+      BuildContext context, Map<String, dynamic> place) {
+    showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
@@ -149,13 +162,15 @@ class RecommendedAdminPlaces extends StatelessWidget {
           actions: [
             TextButton(
               onPressed: () {
-                Navigator.of(context).pop(false); // Cancel delete
+                Navigator.of(context).pop(); // Close the dialog
               },
               child: const Text('Cancel'),
             ),
             TextButton(
-              onPressed: () {
-                Navigator.of(context).pop(true); // Confirm delete
+              onPressed: () async {
+                await _deletePlace(context, place);
+                Navigator.of(context).pop(); // Close the dialog
+                setState(() {}); // Reload the data after deletion
               },
               child: const Text('Delete'),
             ),
@@ -163,24 +178,18 @@ class RecommendedAdminPlaces extends StatelessWidget {
         );
       },
     );
+  }
 
-    if (confirmDelete == true) {
-      // Delete from Firestore
-      try {
-        await FirebaseFirestore.instance
-            .collection('admin')
-            .doc(place['documentId'])
-            .delete();
-
-        // Remove the deleted item from the list
-        // Note: You may need to call setState to update the UI
-        // or use a StatefulWidget for this to work properly
-        // setState(() {
-        //   recommendedPlaces.remove(place);
-        // });
-      } catch (error) {
-        print('Error deleting place: $error');
-      }
+  Future<void> _deletePlace(
+      BuildContext context, Map<String, dynamic> place) async {
+    // Delete from Firestore
+    try {
+      await FirebaseFirestore.instance
+          .collection('admin')
+          .doc(place['documentId'])
+          .delete();
+    } catch (error) {
+      print('Error deleting place: $error');
     }
   }
 
