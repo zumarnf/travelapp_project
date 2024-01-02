@@ -107,6 +107,10 @@ class _DestinationFormState extends State<DestinationForm> {
                 },
                 maxLines: 3,
               ),
+              SizedBox(
+                height: 20,
+              ),
+              Text("Rating: "),
               RatingBar.builder(
                 initialRating: _rating,
                 minRating: 1,
