@@ -138,6 +138,7 @@ class _loginadminState extends State<loginadmin> {
               SizedBox(height: 10),
               TextFormField(
                 controller: _passwordController,
+                obscureText: true,
                 decoration: InputDecoration(
                   filled: true, // Mengisi latar belakang dengan warna
                   fillColor:

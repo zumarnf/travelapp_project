@@ -10,14 +10,16 @@ class RecommendedPlaces extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: _getRecommendedPlacesData(), // Function to get data from Firestore
+      future:
+          _getRecommendedPlacesData(), // Function to get data from Firestore
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return CircularProgressIndicator();
         } else if (snapshot.hasError) {
           return Text('Error: ${snapshot.error}');
         } else {
-          List<Map<String, dynamic>> recommendedPlaces = snapshot.data as List<Map<String, dynamic>>;
+          List<Map<String, dynamic>> recommendedPlaces =
+              snapshot.data as List<Map<String, dynamic>>;
 
           return SizedBox(
             height: 235,
@@ -52,6 +54,7 @@ class RecommendedPlaces extends StatelessWidget {
                           children: [
                             ClipRRect(
                               borderRadius: BorderRadius.circular(12),
+                              // child: Text("Tes"),
                               child: Image.network(
                                 recommendedPlaces[index]['image'],
                                 width: double.maxFinite,
@@ -120,12 +123,14 @@ class RecommendedPlaces extends StatelessWidget {
 
   Future<List<Map<String, dynamic>>> _getRecommendedPlacesData() async {
     try {
-      QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('admin').get();
+      QuerySnapshot querySnapshot =
+          await FirebaseFirestore.instance.collection('admin').get();
 
       List<Map<String, dynamic>> recommendedPlaces = [];
 
       for (QueryDocumentSnapshot documentSnapshot in querySnapshot.docs) {
-        Map<String, dynamic> data = documentSnapshot.data() as Map<String, dynamic>;
+        Map<String, dynamic> data =
+            documentSnapshot.data() as Map<String, dynamic>;
 
         // You may need to add more fields based on your Firestore structure
         recommendedPlaces.add({

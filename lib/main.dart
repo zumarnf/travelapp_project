@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:travelapp/auth/auth_gate.dart';
 import 'package:travelapp/firebase_options.dart';
 // import 'package:firebase_core/firebase_core.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
@@ -10,7 +11,7 @@ import 'package:travelapp/startscreen/startscreen.dart';
 import 'package:travelapp/profile/profilepage.dart';
 
 Future<void> main() async {
-  // WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -31,7 +32,7 @@ class MyApp extends StatelessWidget {
             seedColor: const Color.fromRGBO(255, 159, 95, 1)),
         useMaterial3: true,
       ),
-      home: Startscreen(),
+      home: const AuthGate(),
     );
   }
 }

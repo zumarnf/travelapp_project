@@ -20,6 +20,7 @@ class _locationpgState extends State<locationpg> {
   void initState() {
     super.initState();
     getUserUID();
+    _determinePermission();
   }
 
   void getUserUID() {
@@ -34,6 +35,43 @@ class _locationpgState extends State<locationpg> {
     } else {
       print("User belum masuk"); // Cetak jika user belum masuk
     }
+  }
+
+  Future<Position> _determinePermission() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    // Test if location services are enabled.
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      // Location services are not enabled don't continue
+      // accessing the position and request users of the
+      // App to enable the location services.
+      return Future.error('Location services are disabled.');
+    }
+
+    permission = await Geolocator.requestPermission();
+    // if (permission == LocationPermission.denied) {
+    //   permission = await Geolocator.requestPermission();
+    //   if (permission == LocationPermission.denied) {
+    //     // Permissions are denied, next time you could try
+    //     // requesting permissions again (this is also where
+    //     // Android's shouldShowRequestPermissionRationale
+    //     // returned true. According to Android guidelines
+    //     // your App should show an explanatory UI now.
+    //     return Future.error('Location permissions are denied');
+    //   }
+    // }
+
+    // if (permission == LocationPermission.deniedForever) {
+    //   // Permissions are denied forever, handle appropriately.
+    //   return Future.error(
+    //       'Location permissions are permanently denied, we cannot request permissions.');
+    // }
+
+    // When we reach here, permissions are granted and we can
+    // continue accessing the position of the device.
+    return await Geolocator.getCurrentPosition();
   }
 
   Future<void> saveLocationToFirestore(
@@ -67,42 +105,50 @@ class _locationpgState extends State<locationpg> {
   }
 
   Future<void> getLocation() async {
+    LocationPermission permission = await Geolocator.checkPermission();
     setState(() {
       isLoading = true;
     });
 
-    try {
-      Position position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high,
-      );
+    if (permission == LocationPermission.denied ||
+        permission == LocationPermission.deniedForever ||
+        permission == LocationPermission.unableToDetermine) {
+          print("Requesting permission");
+      permission = await Geolocator.requestPermission();
+    } else {
+      try {
+        Position position = await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.high,
+        );
 
-      setState(() {
-        isLoading = false;
-        latitude = position.latitude;
-        longitude = position.longitude;
-      });
+        setState(() {
+          isLoading = false;
+          latitude = position.latitude;
+          longitude = position.longitude;
+        });
 
-      print(
-          "Menyimpan lokasi dengan UID: $aidi"); // Cetak UID sebelum menyimpan lokasi
-      await saveLocationToFirestore(position.latitude, position.longitude);
+        print(
+            "Menyimpan lokasi dengan UID: $aidi"); // Cetak UID sebelum menyimpan lokasi
+        await saveLocationToFirestore(position.latitude, position.longitude);
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text("Location: $latitude, $longitude"),
-        ),
-      );
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text("Location: $latitude, $longitude"),
+          ),
+        );
 
-      Navigator.pop(context);
-    } catch (e) {
-      setState(() {
-        isLoading = false;
-      });
+        Navigator.pop(context);
+      } catch (e) {
+        setState(() {
+          isLoading = false;
+        });
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text("Error: $e"),
-        ),
-      );
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text("Error: $e"),
+          ),
+        );
+      }
     }
   }
 

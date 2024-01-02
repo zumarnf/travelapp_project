@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:travelapp/auth/auth_gate.dart';
+import 'package:travelapp/auth/auth_service.dart';
 import 'package:travelapp/homeguest/homeguestpage.dart';
 import 'package:travelapp/homeguest/widgets/reccomended_places.dart';
 import 'package:travelapp/locationscreen/locationpage.dart';
@@ -220,13 +222,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
             Center(
               // Menempatkan tombol di tengah vertikal
               child: ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   // Aksi untuk tombol sign up
-
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => LoginGuest()),
-                  );
+                  if (!mounted) return;
+                  await FirebaseAuth.instance.signOut();
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AuthGate(),));
                 },
                 child: Text(
                   'Log Out',
