@@ -112,7 +112,7 @@ class _RecommendedAdminPlacesState extends State<RecommendedAdminPlaces> {
                                   )
                                 ],
                               ),
-                              const SizedBox(height: 10),
+                              const SizedBox(height: 5),
                               ElevatedButton(
                                 onPressed: () {
                                   _showDeleteConfirmationDialog(
@@ -122,7 +122,7 @@ class _RecommendedAdminPlacesState extends State<RecommendedAdminPlaces> {
                                   elevation: 0,
                                   shape: const StadiumBorder(),
                                   padding: EdgeInsets.symmetric(
-                                      horizontal: 15, vertical: 10),
+                                      horizontal: 5, vertical: 3),
                                   backgroundColor:
                                       Color.fromRGBO(240, 240, 240, 1),
                                   foregroundColor:
