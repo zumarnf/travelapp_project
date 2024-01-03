@@ -1,11 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-class LocationCard extends StatelessWidget {
-  final double? latitude;
-  final double? longitude;
+class LocationCard extends StatefulWidget {
+  @override
+  _LocationCardState createState() => _LocationCardState();
+}
 
-  const LocationCard({Key? key, this.latitude, this.longitude})
-      : super(key: key);
+class _LocationCardState extends State<LocationCard> {
+  double? latitude;
+  double? longitude;
+
+  @override
+  void initState() {
+    super.initState();
+    getLocationData();
+  }
+
+  void getLocationData() {
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    final User? user = auth.currentUser;
+    final uid = user!.uid;
+
+    // Mengambil data latitude dan longitude dari Firestore
+    final docRef = FirebaseFirestore.instance.collection('users').doc(uid);
+    docRef.get().then(
+      (DocumentSnapshot doc) {
+        final data = doc.data() as Map<String, dynamic>;
+        setState(() {
+          latitude = data[
+              'latitude']; // Pastikan Anda memiliki field 'latitude' di Firestore
+          longitude = data[
+              'longitude']; // Pastikan Anda memiliki field 'longitude' di Firestore
+        });
+      },
+      onError: (e) => print("Error getting document: $e"),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -188,11 +188,7 @@ class _locationpgState extends State<locationpg> {
                   ),
                 ),
               ),
-            SizedBox(height: 15),
-            LocationCard(
-              latitude: latitude,
-              longitude: longitude,
-            ),
+            
           ],
         ),
       ),

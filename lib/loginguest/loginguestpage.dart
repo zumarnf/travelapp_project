@@ -17,9 +17,11 @@ class _LoginGuestState extends State<LoginGuest> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Center(
         child: Padding(
-          padding: EdgeInsets.only(top: 80.0, right: 35, bottom: 40.0, left: 35),
+          padding:
+              EdgeInsets.only(top: 80.0, right: 35, bottom: 40.0, left: 35),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

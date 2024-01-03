@@ -18,6 +18,7 @@ class _loginadminState extends State<loginadmin> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Center(
         child: Padding(
           padding:

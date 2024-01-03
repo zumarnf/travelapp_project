@@ -133,7 +133,7 @@ class _HomePageState extends State<HomePage> {
         padding: const EdgeInsets.all(14),
         children: [
           // LOCATION CARD
-          const LocationCard(),
+           LocationCard(),
           const SizedBox(
             height: 15,
           ),
