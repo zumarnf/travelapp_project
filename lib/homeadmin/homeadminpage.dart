@@ -6,7 +6,7 @@ import 'package:travelapp/formadd/formaddpage.dart';
 import 'package:travelapp/homeadmin/Recommended_admin_places.dart';
 import 'package:travelapp/homeguest/widgets/cusom_icon_button.dart';
 import 'package:travelapp/homeguest/widgets/nearby_places.dart';
-import 'package:travelapp/homeguest/widgets/reccomended_places.dart';
+// import 'package:travelapp/homeguest/widgets/reccomended_places.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class HomeAdmin extends StatelessWidget {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:travelapp/detailscreen/detailnormal.dart';
-import 'package:travelapp/detailscreen/detailpage.dart';
+// import 'package:travelapp/detailscreen/detailpage.dart';
 // import 'package:travel_app/models/nearby_places_model.dart';
 // import 'package:travel_app/pages/tourist_details_page.dart';
 // import 'package:travel_app/widgets/distance.dart';
