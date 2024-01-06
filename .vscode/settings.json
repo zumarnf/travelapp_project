@@ -1,3 +1,4 @@
 {
-  "java.configuration.updateBuildConfiguration": "disabled"
+  "java.configuration.updateBuildConfiguration": "disabled",
+  "cmake.sourceDirectory": "E:/Josey/kuliah/Semester 5/Pemrograman Mobile/Tubes/travelapp_project/linux"
 }

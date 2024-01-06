@@ -1,7 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:travelapp/detailscreen/detailpage.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class RecommendedAdminPlaces extends StatefulWidget {
   const RecommendedAdminPlaces({Key? key}) : super(key: key);
@@ -29,7 +29,7 @@ class _RecommendedAdminPlacesState extends State<RecommendedAdminPlaces> {
               setState(() {}); // Reload the data
             },
             child: SizedBox(
-              height: 275,
+              height: 285,
               child: ListView.separated(
                 physics: const BouncingScrollPhysics(),
                 scrollDirection: Axis.horizontal,

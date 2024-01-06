@@ -1,7 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class TouristDetailsPage extends StatefulWidget {
   const TouristDetailsPage({
@@ -88,14 +88,17 @@ class _TouristDetailsPageState extends State<TouristDetailsPage> {
                       image: destinationData != null
                           ? DecorationImage(
                               image: NetworkImage(
-                                destinationData?['image'] ?? '',
-                              ),
+                                  destinationData?['pictureUrl'] ?? ''),
                               fit: BoxFit.cover,
+                              onError: (exception, stackTrace) {
+                                print('Error loading image: $exception');
+                              },
                             )
                           : const DecorationImage(
                               image: AssetImage('assets/img/gambar1.jpg'),
                               fit: BoxFit.cover,
                             ),
+
                       boxShadow: [
                         BoxShadow(
                           color: Colors.transparent,
