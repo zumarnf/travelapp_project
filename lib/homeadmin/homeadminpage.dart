@@ -1,3 +1,5 @@
+// import 'package:travelapp/homeguest/widgets/reccomended_places.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ionicons/ionicons.dart';
@@ -6,8 +8,6 @@ import 'package:travelapp/formadd/formaddpage.dart';
 import 'package:travelapp/homeadmin/Recommended_admin_places.dart';
 import 'package:travelapp/homeguest/widgets/cusom_icon_button.dart';
 import 'package:travelapp/homeguest/widgets/nearby_places.dart';
-// import 'package:travelapp/homeguest/widgets/reccomended_places.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 class HomeAdmin extends StatelessWidget {
   const HomeAdmin({Key? key}) : super(key: key);
@@ -47,7 +47,7 @@ class HomeAdmin extends StatelessWidget {
               physics: const BouncingScrollPhysics(),
               padding: const EdgeInsets.all(14),
               children: [
-                const SizedBox(height: 10),
+                const SizedBox(height: 5),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -61,7 +61,7 @@ class HomeAdmin extends StatelessWidget {
                 ),
                 const SizedBox(height: 10),
                 const RecommendedAdminPlaces(),
-                const SizedBox(height: 15),
+                const SizedBox(height: 10),
                 // const RecommendedAdminPlaces(),
                 // const SizedBox(height: 15),
                 Row(
