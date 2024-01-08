@@ -1,13 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:travelapp/auth/auth_gate.dart';
-import 'package:travelapp/auth/auth_service.dart';
 import 'package:travelapp/homeguest/homeguestpage.dart';
 import 'package:travelapp/homeguest/widgets/reccomended_places.dart';
 import 'package:travelapp/locationscreen/locationpage.dart';
-import 'package:travelapp/loginguest/loginguestpage.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:travelapp/navbar/custnavbar.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -124,7 +122,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     Text(
                       "Hello $nama",
                       style: GoogleFonts.poppins(
-                          fontSize: 30, fontWeight: FontWeight.bold),
+                          fontSize: 25, fontWeight: FontWeight.w700),
                     ),
                     Text(
                       'Welcome back to your profile',
@@ -226,7 +224,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   // Aksi untuk tombol sign up
                   if (!mounted) return;
                   await FirebaseAuth.instance.signOut();
-                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AuthGate(),));
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => AuthGate(),
+                      ));
                 },
                 child: Text(
                   'Log Out',
