@@ -22,23 +22,17 @@ class HomeAdmin extends StatelessWidget {
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text("Hey Admin"),
-            Text(
-              "Wonokromo, Surabaya",
-              style: GoogleFonts.poppins(
-                textStyle: Theme.of(context).textTheme.headline6,
-              ),
-            ),
+            Text("Hey Admin", style: GoogleFonts.poppins(fontSize: 19)),
           ],
         ),
-        actions: const [
-          Padding(
-            padding: EdgeInsets.only(left: 8.0, right: 12),
-            child: CustomIconButton(
-              icon: Icon(Ionicons.search),
-            ),
-          ),
-        ],
+        // actions: const [
+        //   Padding(
+        //     padding: EdgeInsets.only(left: 8.0, right: 12),
+        //     child: CustomIconButton(
+        //       icon: Icon(Ionicons.search),
+        //     ),
+        //   ),
+        // ],
       ),
       body: Column(
         children: [
@@ -54,7 +48,7 @@ class HomeAdmin extends StatelessWidget {
                     Text(
                       "Popular Places Near You!",
                       style: GoogleFonts.poppins(
-                        textStyle: Theme.of(context).textTheme.headline5,
+                        fontSize: 19,
                       ),
                     ),
                   ],
@@ -70,7 +64,7 @@ class HomeAdmin extends StatelessWidget {
                     Text(
                       "Most Visited Places Near You",
                       style: GoogleFonts.poppins(
-                        textStyle: Theme.of(context).textTheme.headline5,
+                        fontSize: 18,
                       ),
                     ),
                   ],

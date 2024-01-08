@@ -113,7 +113,7 @@ class _locationpgState extends State<locationpg> {
     if (permission == LocationPermission.denied ||
         permission == LocationPermission.deniedForever ||
         permission == LocationPermission.unableToDetermine) {
-          print("Requesting permission");
+      print("Requesting permission");
       permission = await Geolocator.requestPermission();
     } else {
       try {
@@ -188,7 +188,6 @@ class _locationpgState extends State<locationpg> {
                   ),
                 ),
               ),
-            
           ],
         ),
       ),

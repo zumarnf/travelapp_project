@@ -35,7 +35,7 @@ class _RecommendedAdminPlacesState extends State<RecommendedAdminPlaces> {
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context, index) {
                   return SizedBox(
-                    width: 220,
+                    width: 225,
                     child: Card(
                       elevation: 0.4,
                       shape: const RoundedRectangleBorder(
